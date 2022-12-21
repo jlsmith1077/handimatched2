@@ -1,0 +1,34 @@
+mat-toolbar, mat-toolbar-row {
+    height: 10vh;
+}
+img {
+    max-height: 100%;
+}
+span {
+    flex: 1 1 auto;
+}
+mat-sidenav-container, mat-sidenav-content {
+    height: 100vh;
+}
+mat-sidenav {
+    width: 250px !important;
+    min-height: fit-content;
+    padding: 1em;
+    border-radius: 1em;
+    border: solid .1em;
+    margin-right: 1em;
+    margin-top: .1em;
+}
+mat-nav-list {
+    height: fit-content;
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+}
+.mat-button-wrapper {
+    text-align: center;
+}
+button mat-icon {
+    width: 100%;
+    text-align: center;
+}

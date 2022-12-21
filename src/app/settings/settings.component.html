@@ -1,0 +1,7 @@
+<mat-label>Change Post Settings</mat-label>
+<mat-select (selectionChange)="setSetting($event.value)">
+    <mat-option>All</mat-option>
+    <mat-option *ngFor="let setting of settings">
+    </mat-option>
+</mat-select>
+<button (click)="visibilityChange()">change posts visibility</button>

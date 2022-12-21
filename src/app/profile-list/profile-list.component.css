@@ -1,0 +1,140 @@
+button {
+  background-color: rgb(176, 245, 176); border-radius: .5em;
+}
+img {
+  height: 100px;
+  width: 100px;
+}
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+}
+
+.example-element-diagram {
+  min-width: 100%;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: fit-content;
+  text-align: center;
+}
+
+.example-element-position {
+  margin: 1em;
+  height: auto;
+  min-width: 100%;
+}
+.example-element-position img {
+  height: auto;
+  width: 90%;
+}
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 45px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 1;
+}
+.example-element-description-attribution button {
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+/* My CSS */
+
+.container {
+  width: 100%;
+  padding-bottom: 1em;
+}
+
+.mat-header-cell {
+  font-style: italic;
+}
+@media screen and (orientation: portrait) {
+  .example-element-position {
+    height: auto;
+    width: 90%;
+  }  
+}
+@media screen and (orientation: portrait) {
+  .example-element-position img {
+    height: auto;
+    width: 75%;
+  }  
+}
+@media screen and (orientation: portrait) {
+  .example-element-diagram {
+    height: auto;
+    max-width: 100%;
+  }  
+}
+@media screen and (orientation: portrait) {
+  .mat-icon {
+    font-size: 30pt;
+    height: 30pt;
+    width: 30pt;
+  }  
+}
+@media screen and (orientation: portrait) {
+  .example-element-description-attribution button {    
+    padding: .5em;
+  }  
+}
+@media screen and (orientation: portrait) {
+  mat-card-subtitle {
+    font-size: 25pt;
+    font-weight: 450;
+    font-style: oblique;
+    text-align: center;
+  }  
+}
+
+@media screen and (orientation: portrait) {
+  table {
+    font-size: 35pt;
+  }  
+}
+@media screen and (orientation: portrait) {
+  .mat-cell {
+    font-size: 25pt;
+    font-weight: 500;
+    line-height: 1;
+  }  
+}
+@media screen and (orientation: portrait) {
+  .mat-header-cell {
+    font-size: 30pt;
+    font-weight: 400;
+    line-height: 1;
+  }  
+}

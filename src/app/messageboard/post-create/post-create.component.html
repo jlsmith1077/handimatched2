@@ -1,0 +1,66 @@
+<mat-card>
+    <mat-card-title>Make A New Post</mat-card-title>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <form [formGroup]="form" (submit)="onSavePost()"> 
+        <mat-label>Section</mat-label>
+        <mat-form-field class="matselectionform" appearance="fill" style="width: fit-content;">
+            <mat-select (selectionChange)="changeValue($event.value)" formControlName="section" placeholder="Section for post" required>
+                <mat-optgroup style="font-style: italic;" *ngFor="let section of sections"  label="{{section.type | uppercase}}" >
+                    <mat-option style="font-weight: 500;" *ngFor="let selection of section.name" [value]="selection">
+                      {{selection}}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-select>
+            <mat-error *ngIf="form.get('section')?.invalid">Please choose a section.</mat-error>
+          </mat-form-field>
+        <mat-label>Privacy</mat-label>
+        <mat-form-field appearance="fill" style="width: fit-content;">
+            <mat-select (selectionChange)="changePrivacy($event.value)" formControlName="privacy" placeholder="Who can see your post" required>
+                    <mat-option *ngFor="let selection of privacyOpt" [value]="selection">
+                      {{selection}}
+                    </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-label>Title</mat-label>
+        <mat-form-field *ngIf="mode == 'login'">
+        <input
+            matInput
+            type="text"
+            formControlName="title"
+            placeholder="Title to your post">
+          <mat-error *ngIf="form.get('title')?.invalid">Please enter a title to your post.</mat-error>
+        </mat-form-field>
+        <mat-label>Content</mat-label>
+        <mat-form-field>
+          <textarea
+            matInput
+            rows="2"
+            placeholder="Start typing your post here"
+            formControlName="messagepost"
+          >          
+          </textarea>
+          <mat-error *ngIf="form.get('messagepost')?.invalid">Please enter a post content.</mat-error>
+        </mat-form-field>
+        <mat-label>Add File</mat-label>
+        <div *ngIf="mode == 'login'">
+            <button mat-stroked-button type="button" (click)="imagePicker.click()" color="primary" style="margin-left: 2%;">Choose a File</button>
+            <input type="file" #imagePicker (change)="onImagePicked($event)">
+          <!-- <mat-error *ngIf="form.get('image').invalid">Please choose a file for your post.</mat-error> -->
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image')?.valid">
+            <img 
+              [src]="imagePreview" 
+              [alt]="form.value.username" 
+              *ngIf="format === 'image'">
+            <video 
+              [src]="imagePreview" 
+              controls *ngIf="format === 'video'" >
+            </video>
+        </div>
+        <button
+          color="primary"
+          mat-raised-button
+          type="submit">Save Post</button>
+      </form>
+    </mat-card>
+    

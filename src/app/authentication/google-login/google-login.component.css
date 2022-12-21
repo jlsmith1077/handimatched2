@@ -1,0 +1,11 @@
+    button {
+        margin-top: 1em;
+    }
+    @media screen and (orientation: portrait) {
+        button {
+            font-size: 25pt;
+            width: fit-content;
+            padding: .5em;
+            border-radius: .5em;
+          }
+      }

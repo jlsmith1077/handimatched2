@@ -1,0 +1,29 @@
+mat-card {
+    text-align: center;
+    background-color: white;
+    border-radius: .5em;
+    border: .2em;
+    border-color: rgb(159, 241, 159);
+    margin-bottom: 1em;
+}
+mat-card-subtitle {
+    font-style: italic;
+    color: blue;
+}
+@media screen and (orientation: portrait) {
+    mat-card-title {
+       margin-bottom: 1em;
+
+    }
+    
+  }
+@media screen and (orientation: portrait) {
+    mat-card-subtitle {
+        font-size: 20pt;
+      }
+  }
+@media screen and (orientation: portrait) {
+    p {
+        line-height: 1em;
+      }
+  }

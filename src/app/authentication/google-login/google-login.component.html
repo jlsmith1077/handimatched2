@@ -1,0 +1,6 @@
+<!-- <button mat-stroked-button color="primary" type="button" (click)="loginWithGoogle()">Login with Google</button> -->
+<asl-google-signin-button > </asl-google-signin-button>
+<div *ngIf="socialUser">
+    <img src="{{socialUser.photoUrl}}">
+    <h4>{{socialUser.name}}</h4>
+</div>

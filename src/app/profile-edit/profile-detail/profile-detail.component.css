@@ -1,0 +1,69 @@
+/* .videos {
+    text-align: center; border-radius: .5em; border-top: .1em solid blue; border-bottom: 0em; padding: 0em; width: 90%;
+} */
+.container {
+    display: flex;
+    flex-direction: column;
+    border-radius: .5em;
+    border: .1em dotted black;
+    padding: 1em;
+    align-items: center;
+    margin: 1em 25% 1em 25%;
+}
+.container * {
+    flex: 1;
+    text-align: center;
+}
+button {
+    border-radius: .5em;
+    gap: 1em;
+} 
+@media screen and (orientation: portrait) {
+    .container {
+        max-width: 100%;
+    }
+}
+.profile-item ng-star-inserted {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: center;
+
+}
+
+.profile-item ng-star-inserted mat-card mat-focus-indicator title a .mat-card-title .mat-card-subtitle .mat-card-image {
+    flex: 1;
+}
+.img-responsive {
+    padding: .5em;
+    height: 250px;
+    width: 250px;
+    margin: 1em;
+}
+@media screen and (orientation: portrait) {
+    .mat-card-actions a, .mat-card-actions button {
+        text-decoration: none;
+        font-size: 20pt;
+        border-radius: .5em;
+    }
+}
+@media screen and (orientation: portrait) {
+    .mat-icon {
+        font-size: 30pt;
+        height: 30pt;
+        width: 30pt;
+    }
+}
+@media screen and (orientation: portrait) {
+    .mat-card-title{
+        margin-bottom: 1em;
+        padding: .1em;
+    }
+}
+@media screen and (orientation: portrait) {
+    .mat-card-subtitle {
+        font-size: 25pt;
+        margin-bottom: 1em;
+        padding: .1em;
+    }
+}

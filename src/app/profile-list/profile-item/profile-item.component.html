@@ -1,0 +1,14 @@
+<mat-card class=".container mat-elevation-z8">
+    <a 
+      (click)="saveUsername(profile.username, index)"
+      [routerLink]="[index]"
+      routerLinkActive="mat-accent">
+        <mat-card-title>{{ profile.username | uppercase}}</mat-card-title>
+        <mat-card-subtitle>{{ profile.location }}</mat-card-subtitle>
+          <img mat-card-image
+          src="{{profile.imagePath}}" 
+          (error)="setDefaultPic()"
+          alt="{{ profile.fullname }}">
+      </a>
+    </mat-card>
+      

@@ -1,0 +1,33 @@
+<mat-card class="backdrop" (click)="onSaveComment()">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onSaveComment()" *ngIf="!isLoading">
+      <mat-label> Make Comment</mat-label>
+      <mat-form-field class="fill-container">
+        <textarea
+          matInput
+          rows="1"
+          placeholder="Type comment here"
+          formControlName="comment"
+          >
+        </textarea>
+      </mat-form-field>
+    </form>
+    <mat-card-actions>
+      <button
+        style="background-color: rgb(128, 252, 128);"
+        mat-raised-button
+        type="submit" 
+        >
+          Send Comment
+      </button>
+      <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onCommentOff()"
+          >
+          cancel
+      </button> 
+    </mat-card-actions>
+    </mat-card>
+  

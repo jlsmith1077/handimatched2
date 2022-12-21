@@ -1,0 +1,41 @@
+.backdrop {
+    position: fixed;
+    top: 15%;
+    left: 25%;
+    width: 50vw;
+    height: fit-content;
+    background: rgba(40, 105, 158, 0.75);
+    z-index: 50;
+    color: black;
+    font-weight: 600pt;
+    text-align: center;
+    padding-bottom: 2em;
+}
+.center {
+    top: 25%;
+}
+.input {
+    padding-top: 1em;
+    text-align: center;
+    color: black;
+}
+mat-label {
+    margin: 1em;
+}
+mat-card-actions {
+    margin-bottom: 1em;
+}
+button {
+    padding: .5em;
+    border-radius: .5em;
+    margin-top: 1em;
+}
+
+@media screen and (orientation: portrait) {
+    button {
+        flex: 1;
+        font-size: 25pt;
+        padding: .5em;
+        border-radius: .5em;
+      }
+  }
