@@ -53,6 +53,7 @@ import { PostCreateComponent } from './messageboard/post-create/post-create.comp
 import { SettingsComponent } from './settings/settings.component';
 import { ReplyComponent } from './message/reply/reply.component';
 import { ReplyListComponent } from './message/reply/reply-list/reply-list.component';
+import { MessageListComponent } from './message/message-list/message-list.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { ReplyListComponent } from './message/reply/reply-list/reply-list.compon
     PostCreateComponent,
     SettingsComponent,
     ReplyComponent,
-    ReplyListComponent
+    ReplyListComponent,
+    MessageListComponent
   ],
   imports: [
     AppRoutingModule,

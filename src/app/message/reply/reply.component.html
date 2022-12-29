@@ -1,1 +1,35 @@
-<p>reply works!</p>
+<mat-card class="backdrop">
+    <mat-card-subtitle><mat-icon>time</mat-icon> {{currentDateAndTime}}</mat-card-subtitle>
+    <mat-card-content>
+  <form [formGroup]="form" (submit)="onCreateReply()"> 
+        <mat-form-field>
+        <textarea
+          matInput
+          rows="4"
+          id="content"
+          formControlName="content1"
+          placeholder="Type Message Here"
+        >
+      </textarea>
+        </mat-form-field>
+      <button
+      mat-raised-button
+        type="submit"
+      >
+        Send this Reply
+      </button>
+      
+    </form>
+    <hr>
+      <button
+          mat-raised-button
+          color="warn"
+          type="button"
+          (click)="onCancel()"
+          >
+          cancel
+      </button> 
+    <mat-card-subtitle *ngIf="openReply === true">My Replies</mat-card-subtitle>
+  </mat-card-content>
+  </mat-card>
+  
