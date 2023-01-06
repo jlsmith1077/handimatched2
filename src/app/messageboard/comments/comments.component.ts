@@ -27,7 +27,7 @@ postsPerPage = 10;
 currentPage = 1;
 
   constructor( private http: HttpClient, private commentsService: CommentsService, private mpService: MessagePostService) {}
-
+// git not working 
   ngOnInit(): void {
     this.username = sessionStorage.getItem('username') as string;
     this.form = new FormGroup({

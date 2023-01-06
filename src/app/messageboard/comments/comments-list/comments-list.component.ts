@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, OnDestroy, Input } from '@angular/core';
+import { CustomPaginator } from '../../customPagination';
+
 import { Subscription, Subject } from 'rxjs';
 import { MessagePostService } from '../../message-post.service';
+import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { Comment } from '../../comment.model';
 import { Post } from '../../message-post.model';
 import { CommentsService } from '../comments.service';
