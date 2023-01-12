@@ -24,7 +24,7 @@ const MIME_TYPE_MAP = {
       if (isValid) {
         error = null;
       }
-      cb(error, "videos");
+      cb(error, "backend/videos");
     },
     filename: (req, file, cb) => {
       const name = file.originalname

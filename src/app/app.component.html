@@ -13,7 +13,7 @@
       <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signin" routerLinkActive="mat-accent">Log in</button>
       <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signup" routerLinkActive="mat-accent">Sign up</button>
       <button *ngIf="userIsAuthenticated" mat-button routerLink="/profiles" routerLinkActive="warn" (click)="onLogout()" style="color: red; border-radius: .5em;">Log out</button>
-    </mat-toolbar-row>
+  </mat-toolbar-row>
   </mat-toolbar>
      <mat-sidenav-container>
        <mat-sidenav class="mat-elevation-z8" mode="side" #sidenav="matSidenav">
