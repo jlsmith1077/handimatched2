@@ -2,6 +2,7 @@
 <mat-toolbar>
     <mat-toolbar-row>
       <img src="../../assets/images/handimatched.jpg" class="mat-elevation" style="box-shadow: 1px 1px 5px rgba(0,0,0,0.5);">
+      Home
       <button  mat-icon-button  *ngIf="!sidenav.opened" (click)="sidenav.toggle()"><mat-icon inline="true">menu</mat-icon></button>
       <button mat-icon-button *ngIf="sidenav.opened" (click)="sidenav.toggle()"><mat-icon  style="color: red;" inline="true">close</mat-icon></button>
       <span></span>
