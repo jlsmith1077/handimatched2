@@ -137,6 +137,7 @@ exports.profileCreate = (req, res, next) => {
   }
 
   exports.profileGet = (req, res, next) => {
+    console.log('in profile get func')
     const profileQuery = Profile.find().collation({locale: 'en_US', strength:1});
     let fetchedProfiles; 
     profileQuery.then(documents => {
