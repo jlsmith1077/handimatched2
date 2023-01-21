@@ -118,7 +118,7 @@ mat-sidenav-container{
     border-color: black;
     color: green;
 }
-@media screen and (orientation: portrait){
+/* @media screen and (orientation: portrait){
     .navlist-mobile button * {
         flex: 1;
      }
@@ -154,4 +154,4 @@ mat-sidenav-container{
      mat-toobar .mat-button-wrapper, mat-toolbar .mat-stroked-button {
         flex: 1;
       }
-  }
+  } */

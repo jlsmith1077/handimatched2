@@ -117,7 +117,7 @@ button {
     font-style: italic;
   }
   
-  @media screen and (orientation: portrait) {
+  /* @media screen and (orientation: portrait) {
       mat-toolbar {
       margin-bottom: 1em;
     }  
@@ -187,4 +187,4 @@ button {
     button {
       padding: .5em;
     }  
-  }
+  } */

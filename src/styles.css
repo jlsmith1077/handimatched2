@@ -74,13 +74,18 @@ button.mat-menu-item {
   height: fit-content;
   width: fit-content;
 }
+.mat-action-row button {
+  margin-right: 1em;
+  margin-bottom: 1em;
+  padding: .1em;
+}
 ::ng-deep .mat-select-panel {
   max-height: none!important;
 }
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
 }
-@media screen and (orientation: portrait) {
+/* @media screen and (orientation: portrait) {
   th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
         padding: .5em !important;
         border-width: 3px !important ;
@@ -229,7 +234,7 @@ button.mat-menu-item {
       font-size: 50pt;
   }
  } */
-  @media screen and (orientation: portrait) {
+  /* @media screen and (orientation: portrait) {
     .mat-select-min-line, mat-option mat-focus-indicator ng-tns-c114-6 ng-star-inserted {
       font-size: 25pt;
   }
@@ -342,9 +347,9 @@ button.mat-menu-item {
   padding: .1em;
 }
 
-  @media screen and (orientation: portrait) {
+  @media screen and (orientation: portrait) { */
     /* this is the parent span angular inserts for icon inside mat-fab */
-::ng-deep.mat-fab .mat-button-wrapper {
+/* ::ng-deep.mat-fab .mat-button-wrapper {
   display: flex !important;
   justify-content: center !important;
 }
@@ -361,7 +366,8 @@ button.mat-menu-item {
       flex: 1;
       font-size: 25pt;
   }
- }
+ } */
+  
  
 
  

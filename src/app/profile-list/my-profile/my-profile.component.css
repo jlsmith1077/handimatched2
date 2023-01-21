@@ -18,7 +18,7 @@ input[type="file"] {
     max-width: 100%;
 }
 
-@media screen and (orientation: portrait) {
+/* @media screen and (orientation: portrait) {
     button {
         max-width: 100%;
         height: fit-content !important;
@@ -32,4 +32,4 @@ input[type="file"] {
       margin: 0em;
       width: 100%;
   }
- }
+ } */

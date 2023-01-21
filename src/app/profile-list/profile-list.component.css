@@ -80,7 +80,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 .mat-header-cell {
   font-style: italic;
 }
-@media screen and (orientation: portrait) {
+/* @media screen and (orientation: portrait) {
   .example-element-position {
     height: auto;
     width: 90%;
@@ -137,4 +137,4 @@ tr.example-element-row:not(.example-expanded-row):active {
     font-weight: 400;
     line-height: 1;
   }  
-}
+} */
