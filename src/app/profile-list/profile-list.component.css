@@ -6,7 +6,7 @@ img {
   width: 100px;
 }
 table {
-  width: 100%;
+  max-width: 100%;
 }
 
 tr.example-detail-row {
@@ -71,7 +71,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .container {
   max-width: 100%;
-  padding-bottom: 1em;
+  margin: 0em;
+  padding: 0em;
 }
 
 .mat-header-cell {

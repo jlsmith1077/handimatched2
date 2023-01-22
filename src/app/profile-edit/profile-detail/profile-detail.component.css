@@ -23,7 +23,7 @@ button {
         max-width: 100%;
     }
 }
-.profile-item ng-star-inserted {
+/* .profile-item ng-star-inserted {
     display: flex;
     flex-direction: row;
     justify-content: stretch;
@@ -33,7 +33,7 @@ button {
 
 .profile-item ng-star-inserted mat-card mat-focus-indicator title a .mat-card-title .mat-card-subtitle .mat-card-image {
     flex: 1;
-}
+} */
 .img-responsive {
     padding: .5em;
     height: 250px;
