@@ -9,7 +9,7 @@
       <button *ngIf="userIsAuthenticated" mat-icon-button><mat-icon inline="true" routerLink="/mail">message</mat-icon></button>
       <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon inline="true">forum</mat-icon></button>
       <span></span>
-      <!-- <app-google-login *ngIf="!userIsAuthenticated"></app-google-login> -->
+      <app-google-login *ngIf="!userIsAuthenticated"></app-google-login>
       <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signin" routerLinkActive="mat-accent">Log in</button>
       <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signup" routerLinkActive="mat-accent">Sign up</button>
       <button *ngIf="userIsAuthenticated" mat-button routerLink="/profiles" routerLinkActive="warn" (click)="onLogout()" style="color: red; border-radius: .5em;">Log out</button>

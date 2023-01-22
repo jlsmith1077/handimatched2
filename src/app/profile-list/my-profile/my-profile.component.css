@@ -1,4 +1,4 @@
-mat-card{
+/* mat-card{
     height: fit-content;
     max-width: 100%;
     text-align: center;
@@ -8,7 +8,7 @@ mat-card-title, mat-card-footer {
     flex-flow: row wrap;
     text-align: center;
     padding: 0em;
-}
+} */
 img {
     max-width: 100%;
     height: auto;

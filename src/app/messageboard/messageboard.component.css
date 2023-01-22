@@ -87,7 +87,7 @@ button {
     font-weight: bold;
     font-size: 40px;
     line-height: normal;
-    width: 100%;
+    max-width: 100%;
   }
   
   .example-element-description {
@@ -101,7 +101,7 @@ button {
   /* My CSS */
   
   .container {
-    width: 100%;
+    max-width: 100%;
     padding-bottom: 1em;
   }
   .mat-action-row {

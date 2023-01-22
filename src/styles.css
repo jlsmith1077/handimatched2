@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { min-height: 100%; }
+html, body { min-height: 100%; max-width: 100; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 a {
@@ -54,7 +54,7 @@ mat-paginator {
   height: fit-content;
   align-self: flex-end;
 }
-.mat-expansion-panel-header {
+/* .mat-expansion-panel-header {
   height: 100px;
   padding: .5em;
 } 
@@ -84,7 +84,7 @@ button.mat-menu-item {
 }
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
-}
+} */
 /* @media screen and (orientation: portrait) {
   th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
         padding: .5em !important;
@@ -371,9 +371,6 @@ button.mat-menu-item {
  
 
  
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
