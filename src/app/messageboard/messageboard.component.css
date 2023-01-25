@@ -38,11 +38,11 @@ button {
   }
   
   tr.example-element-row:not(.example-expanded-row):hover {
-    background: whitesmoke;
+    background: rgb(76, 134, 241);
   }
   
   tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+    background: #5ae750;
   }
   
   .example-element-row td {
@@ -80,7 +80,7 @@ button {
 
   .example-element-symbol img {
     height: auto;
-    width: 75%;
+    max-width: 100%
   }
   .example-element-symbol {
     text-align: center;
@@ -92,6 +92,8 @@ button {
   
   .example-element-description {
     padding: 16px;
+    max-width: 100%;
+    text-align: center;
   }
   
   .example-element-description-attribution {
@@ -103,6 +105,16 @@ button {
   .container {
     max-width: 100%;
     padding-bottom: 1em;
+  }
+  .separate {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+  }
+  mat-toolbar {
+    height: fit-content;
+    gap: .1em;
+    padding-bottom: .1em;
   }
   .mat-action-row {
     text-align: center;
