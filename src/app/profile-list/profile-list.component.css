@@ -84,9 +84,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 /* My CSS */
 
 .container {
-  max-width: 100%;
   margin: 0em;
-  padding: 0em;
+  padding: 0em !important;
 }
 .ng-contain {
   max-width: 100%;

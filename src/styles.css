@@ -38,7 +38,7 @@ button:active {
   max-height: fit-content !important;
  }
  .mat-table, table {
-  max-width: 100%;
+  width: 100%;
  }
  mat-sidenav {
   width: 200px;
@@ -87,6 +87,14 @@ button.mat-menu-item {
 }
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
+}
+.mat-card {
+  padding: 0em !important;
+}
+.mat-toolbar-row {
+  padding: 0em !important;
+  margin: 0em !important;
+  border: 0em !important;
 }
 /* @media screen and (orientation: portrait) {
   th.mat-header-cell, td.mat-cell, td.mat-footer-cell {

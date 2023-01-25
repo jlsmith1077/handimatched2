@@ -89,7 +89,7 @@ export class MessageboardComponent implements OnInit, OnDestroy {
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-  columnsToDisplay: string[] = ['imagePath', 'username', 'title'];
+  columnsToDisplay: string[] = ['imagePath', 'username', 'location', 'title'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Profile | null | undefined;
   type: any = ['Forums', 'Ad'];

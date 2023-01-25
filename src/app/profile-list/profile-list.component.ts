@@ -57,7 +57,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription = new Subscription;
   dataSource!: MatTableDataSource<any>;
 
-  columnsToDisplay: string[] = ['imagePath', 'username', 'location'];
+  columnsToDisplay: string[] = ['imagePath', 'username', 'location', 'gender'];
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: Profile | null | undefined;
   @ViewChild(MatPaginator) paginator?: MatPaginator;
