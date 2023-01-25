@@ -33,10 +33,13 @@ button:active {
 .mat-form-field.fill-container textarea {
   height: calc(100% - 25px);
 }
-/* ::ng-deep .matselectionform .mat-select-panel {
+::ng-deep .matselectionform .mat-select-panel {
   max-width: fit-content !important;
   max-height: fit-content !important;
- } */
+ }
+ .mat-table, table {
+  max-width: 100%;
+ }
  mat-sidenav {
   width: 200px;
   padding: 1em;
@@ -54,7 +57,7 @@ mat-paginator {
   height: fit-content;
   align-self: flex-end;
 }
-/* .mat-expansion-panel-header {
+.mat-expansion-panel-header {
   height: 100px;
   padding: .5em;
 } 
@@ -84,7 +87,7 @@ button.mat-menu-item {
 }
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
-} */
+}
 /* @media screen and (orientation: portrait) {
   th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
         padding: .5em !important;

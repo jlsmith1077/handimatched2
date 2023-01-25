@@ -1,7 +1,7 @@
 /* .videos {
     text-align: center; border-radius: .5em; border-top: .1em solid blue; border-bottom: 0em; padding: 0em; width: 90%;
 } */
-.container {
+/* .container {
     display: flex;
     flex-direction: column;
     border-radius: .5em;
@@ -9,8 +9,8 @@
     padding: 1em;
     align-items: center;
     margin: 1em 25% 1em 25%;
-}
-.container * {
+} */
+/* .container * {
     flex: 1;
     text-align: center;
 }
@@ -22,7 +22,7 @@ button {
     .container {
         max-width: 100%;
     }
-}
+} */
 /* .profile-item ng-star-inserted {
     display: flex;
     flex-direction: row;
