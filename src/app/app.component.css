@@ -31,7 +31,7 @@ mat-sidenav-content {
 mat-sidenav-container{
     width: 100%;
     min-height: 100vh;
-    padding: 0em;
+    padding: .1em;
     border: 0em;
     margin: 0em !important;
     background-color: whitesmoke;

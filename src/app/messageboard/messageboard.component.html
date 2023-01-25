@@ -34,8 +34,8 @@
     <div class="container">
       <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
         <ng-container *ngIf="column == 'imagePath'">
-          <th mat-header-cell *matHeaderCellDef >User's Pic </th>
-          <td mat-cell *matCellDef="let element"> <img mat-card-img src="{{element[column]}}"> </td>
+          <th style="padding: 0em !important;" mat-header-cell *matHeaderCellDef >User's Pic </th>
+          <td style="padding: 0em !important;" mat-cell *matCellDef="let element"> <img style="height: 100px; width: 100px;" mat-card-img src="{{element[column]}}"> </td>
         </ng-container>
         <ng-container *ngIf="column != 'imagePath' || 'title'">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column | uppercase }} </th>

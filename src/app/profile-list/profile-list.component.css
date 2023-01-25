@@ -1,10 +1,7 @@
 button {
   background-color: rgb(176, 245, 176); border-radius: .5em;
 }
-img {
-  height: 100px;
-  width: 100px;
-}
+
 .table {
   max-width: 100%;
 }

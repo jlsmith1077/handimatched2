@@ -13,6 +13,10 @@ mat-card *{
     flex: 1;
     font-size: 20pt;
 }
+img {
+    height: 200px;
+    width: auto;
+}
 form {
     display: flex;
     flex-direction: column;

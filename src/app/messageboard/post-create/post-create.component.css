@@ -6,6 +6,10 @@ mat-card {
 mat-label {
     font-style: italic;
 }
+img {
+    height: 200px;
+    width: auto;
+}
 
 form {
     flex-direction: column;

@@ -47,15 +47,15 @@
           </button>
       </mat-nav-list>
         <mat-nav-list *ngIf="isMobile >= 1024" class="navlist">
-          <button mat-icon-button routerLink="/profiles" routerLinkActive="primary" (click)="removeDivider()"><mat-icon>house</mat-icon>Home</button>
-          <button mat-icon-button routerLink="/app" routerLinkActive="primary"><mat-icon>message</mat-icon>Messages</button>
-          <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon>forum</mat-icon>View Posts</button>
-          <button mat-icon-button routerLink="/create" routerLinkActive="primary"><mat-icon>forum</mat-icon>Create Post</button>
-          <button *ngIf="mode === 'edit'"  mat-icon-button [routerLink]="['profiles/edit/', profile?._id]" routerLinkActive="primary"><mat-icon>person_outline</mat-icon>Update Profile</button>
-          <button *ngIf="mode ==='create'" mat-icon-button routerLink="profiles/create1" routerLinkActive="primary"><mat-icon>person_outline</mat-icon>Create Profile</button>
-          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon>videocam</mat-icon>Record Video</button>
-          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon>add_a_photo</mat-icon>Upload Video</button>
-          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon>settings</mat-icon>Settings</button>
+          <button mat-icon-button routerLink="/profiles" routerLinkActive="primary" (click)="removeDivider()"><mat-icon style="font-size: x-large;">house</mat-icon>Home</button>
+          <button mat-icon-button routerLink="/app" routerLinkActive="primary"><mat-icon style="font-size: x-large !important;">message</mat-icon>Messages</button>
+          <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon style="font-size: x-large;">forum</mat-icon>View Posts</button>
+          <button mat-icon-button routerLink="/create" routerLinkActive="primary"><mat-icon style="font-size: x-large;">forum</mat-icon>Create Post</button>
+          <button *ngIf="mode === 'edit'"  mat-icon-button [routerLink]="['profiles/edit/', profile?._id]" routerLinkActive="primary"><mat-icon style="font-size: x-large;">person_outline</mat-icon>Update Profile</button>
+          <button *ngIf="mode ==='create'" mat-icon-button routerLink="profiles/create1" routerLinkActive="primary"><mat-icon style="font-size: x-large;">person_outline</mat-icon>Create Profile</button>
+          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">videocam</mat-icon>Record Video</button>
+          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">add_a_photo</mat-icon>Upload Video</button>
+          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">settings</mat-icon>Settings</button>
       </mat-nav-list>
       
        </mat-sidenav>
