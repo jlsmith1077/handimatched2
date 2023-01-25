@@ -11,6 +11,7 @@ button {
   .createPostButton {
     border-radius: .5em;
     margin-bottom: 0em !important;
+    margin-right: 1em;
   } 
   
   .mat-action-row button:hover {
@@ -114,7 +115,7 @@ button {
   mat-toolbar {
     height: fit-content;
     gap: .1em;
-    padding-bottom: .1em;
+    padding-bottom: 1em;
   }
   .mat-action-row {
     text-align: center;

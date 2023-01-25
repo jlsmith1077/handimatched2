@@ -4,17 +4,18 @@
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
       </mat-form-field>
-      <button class="createPostButton" color="primary" mat-raised-button [matMenuTriggerFor]="type">Sections</button>
-      <mat-menu #type="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="forums">Forums</button>
-            <button mat-menu-item [matMenuTriggerFor]="ads">Ads</button>
+      <div>
+        <button class="createPostButton" color="primary" mat-raised-button [matMenuTriggerFor]="type">Sections</button>
+        <mat-menu #type="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="forums">Forums</button>
+          <button mat-menu-item [matMenuTriggerFor]="ads">Ads</button>
         </mat-menu>
         <mat-menu #forums="matMenu">
-            <button mat-menu-item (click)="sortData('All')">All</button>
-            <button mat-menu-item (click)="sortData('vent')">Let off some steam</button>
-            <button mat-menu-item (click)="sortData('events')">events</button>
-            <button mat-menu-item (click)="sortData('discussions')">discussions</button>
-          </mat-menu>
+          <button mat-menu-item (click)="sortData('All')">All</button>
+          <button mat-menu-item (click)="sortData('vent')">Let off some steam</button>
+          <button mat-menu-item (click)="sortData('events')">events</button>
+          <button mat-menu-item (click)="sortData('discussions')">discussions</button>
+        </mat-menu>
         <mat-menu #ads="matMenu">
           <button mat-menu-item (click)="sortData('women for men')">women for men</button>
           <button mat-menu-item (click)="sortData('men for women')">men for women</button>
@@ -24,7 +25,8 @@
         <span></span>
         <a routerLink="/create" class="createPostButton" mat-raised-button color="primary" style="float: right">
             Create Post
-        </a>
+          </a>
+        </div>
       </div>
     </mat-toolbar>
   <mat-card >
