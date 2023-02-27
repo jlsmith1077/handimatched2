@@ -1,5 +1,5 @@
 <mat-card>
-    <mat-card-title>Make A New Post</mat-card-title>
+    <mat-card-title class="mat-elevation-z8">Make A New Post</mat-card-title>
       <mat-spinner *ngIf="isLoading"></mat-spinner>
       <form [formGroup]="form" (submit)="onSavePost()"> 
         <mat-label>Section</mat-label>
@@ -42,11 +42,9 @@
           <mat-error *ngIf="form.get('messagepost')?.invalid">Please enter a post content.</mat-error>
         </mat-form-field>
         <mat-label>Add File</mat-label>
-        <div *ngIf="mode == 'login'">
-            <button mat-stroked-button type="button" (click)="imagePicker.click()" color="primary" style="margin-left: 2%;">Choose a File</button>
+            <button mat-stroked-button type="button" (click)="imagePicker.click()" color="primary">Choose a File</button>
             <input type="file" #imagePicker (change)="onImagePicked($event)">
           <!-- <mat-error *ngIf="form.get('image').invalid">Please choose a file for your post.</mat-error> -->
-        </div>
         <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image')?.valid">
             <img 
               [src]="imagePreview" 

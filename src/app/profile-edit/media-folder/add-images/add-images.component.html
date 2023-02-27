@@ -1,0 +1,28 @@
+<form [formGroup]="profileAddImageForm" >
+    <mat-form-field style="width: 50% !important; text-align: center;">
+        <input          
+            matInput
+            type="text"
+            formControlName="title"
+            placeholder="title"
+            >
+          </mat-form-field>
+        <button *ngIf="!enableSaveMedia" mat-stroked-button type="button" (click)="imagePicker.click()" style="background-color: green; color: white; font-size: large;">
+            Select Media To Upload
+        </button>
+    <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && profileAddImageForm.get('path')!.valid">
+    <img *ngIf="imagePreview" [src]="imagePreview" [alt]="profileAddImageForm.value.title">
+    <img *ngIf="!imagePreview" src="{{image}}" [alt]="profileAddImageForm.value.title">
+    <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
+    </div>
+    <mat-card-actions *ngIf="enableSaveMedia"> 
+        <button (click)="onSubmit()" mat-raised-button style="background-color: green; color: white;">
+            Save Media
+        </button>
+    </mat-card-actions>
+
+</form>
+<div *ngFor="let image of imageArray">
+    <img style="height: 200px; width: 200px;" class="mat-eleveation-z8" src="{{image}}">
+</div>

@@ -21,7 +21,7 @@ export class ProfileEditComponent implements OnInit {
   profile: any = Profile;
   profiles: Profile[] = [];
   profileForm!: FormGroup;
-  imagePreview: string | undefined;
+  imagePreview: string = '';
   imagePreviewtwo: string | undefined;
   imagePreviewone: string | undefined;
   image: string = '';
@@ -32,9 +32,9 @@ export class ProfileEditComponent implements OnInit {
   gender ='';
   interest = '';
   creator: string = '';
-  private authStatusSub: Subscription = new Subscription;
+  // private authStatusSub: Subscription = new Subscription;
+  // subscription: Subscription = new Subscription;
   profileEditUpdate: Subscription = new Subscription;
-  subscription: Subscription = new Subscription;
   subProfile: Subscription = new Subscription;
   id: any = undefined;
   cities: string | Array<string> = '';
@@ -53,7 +53,7 @@ constructor(
     this.profile = JSON.parse(sessionStorage.getItem('user')!)
     this.profileEditUpdate = this.profileService.getProfileEditListener().
       subscribe(profile => {
-        this.profile = profile;        
+        this.profile = profile;       
       });
     this.profileForm = new FormGroup({
       'username': new FormControl(null, {
@@ -77,6 +77,9 @@ constructor(
       if (paramMap.has("id")) {
         this.mode === 'edit';
         this.profileId = paramMap.get('id')!;
+        this.profile = this.profileService.getProfile2(this.profileId)
+        console.log('mode', this.mode, 'imagepath profile edit and profile after getProfile()', this.profile.imagePath, '--', this.profile)
+        this.imagePreview = this.profile.imagePath;
         this.profileForm!.setValue({ 
           username: this.username,
           email: this.profile!.email,
@@ -93,6 +96,7 @@ constructor(
     });
     // this.image = this.profile!.imagePath
     // console.log('imagepath', this.profile!.imagePath)
+    console.log('mode', this.mode)
   }
   onSubmit() {
     sessionStorage.setItem('userId', this.profileId!);
@@ -105,7 +109,7 @@ constructor(
       this.profileService.updateProfile(
         this.profileId!, this.profileForm.value.username, this.profileForm.value.email, this.profileForm.value.imagePath, this.profileForm.value.location,
         this.profileForm.value.interest, this.profileForm.value.gender, this.profileForm.value.fullname,
-        this.creator, null!, null!);
+        this.creator, null!, null!, null!, null!);
     } else {
         this.profileService.addProfile(
         this.profileForm.value.username, this.profileForm.value.location,
@@ -133,7 +137,7 @@ constructor(
     }
 
   onNewProfile() {
- this.router.navigate(['new'], {relativeTo: this.route});
+    this.router.navigate(['new'], {relativeTo: this.route});
   }
   modeChange() {
     const username = sessionStorage.getItem('username');

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-html, body { min-height: 100%; }
+html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 a {
@@ -17,19 +17,20 @@ button:focus {
 button:active {
   background-color: rgb(17, 250, 17);
 }
-.mat-form-field.fill-container,
+/* .mat-form-field.fill-container,
 .mat-form-field.fill-container .mat-form-field-infix,
 .mat-form-field.fill-container .mat-form-field-flex,
 .mat-form-field.fill-container .mat-form-field-wrapper {
   height: auto;
-  /* width: 95%; */
   background-color: white;
   border-radius: .5em;
   margin-left: .1em;
   margin-top: 1em;
   text-align: center;
+} */
+.mat-icon.mat-icon-inline {
+  font-size: xx-large !important;
 }
-
 .mat-form-field.fill-container textarea {
   height: calc(100% - 25px);
 }
@@ -39,24 +40,19 @@ button:active {
  }
  .mat-table, table {
   width: 100%;
+  height: 100%;
+ }
+ .container_app {
+    width: 100%;
+    height: 100vh !important
  }
  mat-sidenav {
   width: 200px;
   padding: 1em;
-  margin-top: 1em;
+  margin-top: .1em;
   border-radius: .5em;
  }
-mat-paginator {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 1em;
-  background-color: rgb(174, 174, 240) !important;
-  border-radius: .5em !important;
-  width: fit-content;
-  height: fit-content;
-  align-self: flex-end;
-}
+
 .mat-expansion-panel-header {
   height: 100px;
   padding: .5em;
@@ -91,10 +87,21 @@ button.mat-menu-item {
 .mat-card {
   padding: 0em !important;
 }
+.mat-input-element {
+  text-align: center !important;
+}
 .mat-toolbar-row {
   padding: 0em !important;
   margin: 0em !important;
   border: 0em !important;
+}
+
+.mat-form-field ::placeholder {
+  text-align: center;
+}
+.mat-header-cell {
+ color: whitesmoke;
+ font-size: larger;
 }
 /* @media screen and (orientation: portrait) {
   th.mat-header-cell, td.mat-cell, td.mat-footer-cell {

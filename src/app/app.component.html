@@ -1,9 +1,9 @@
-<div class="container">
+<div style="display: flex; flex-direction: column; height: 100vh;">
 <mat-toolbar>
     <mat-toolbar-row>
       <img src="../../assets/images/handimatched.jpg" class="mat-elevation" style="box-shadow: 1px 1px 5px rgba(0,0,0,0.5); height: 100%; padding: 0em; margin: 0em;">
       <button  mat-icon-button  *ngIf="!sidenav.opened" (click)="sidenav.toggle()"><mat-icon style="font-size: x-large;" inline="true">menu</mat-icon></button>
-      <button mat-icon-button *ngIf="sidenav.opened" (click)="sidenav.toggle()"><mat-icon  style="color: red;" inline="true">close</mat-icon></button>
+      <button mat-icon-button *ngIf="sidenav.opened" (click)="sidenav.toggle()"><mat-icon  style="color: red; font-size: x-large;" inline="true">close</mat-icon></button>
       <span></span>
       <button mat-icon-button (click)="removeDivider()"><mat-icon style="font-size: x-large;" inline="true" routerLink="/profiles">house</mat-icon></button>
       <button *ngIf="userIsAuthenticated" mat-icon-button><mat-icon style="font-size: x-large;" inline="true" routerLink="/mail">message</mat-icon></button>
@@ -15,7 +15,7 @@
       <button *ngIf="userIsAuthenticated" mat-button routerLink="/profiles" routerLinkActive="warn" (click)="onLogout()" style="color: red; border-radius: .5em;">Log out</button>
   </mat-toolbar-row>
   </mat-toolbar>
-     <mat-sidenav-container>
+     <mat-sidenav-container style="flex-grow: 1;">
        <mat-sidenav class="mat-elevation-z8" mode="side" #sidenav="matSidenav">
         <div class="containMyprofile">
           <my-profile></my-profile>

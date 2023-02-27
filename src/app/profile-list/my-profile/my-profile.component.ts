@@ -64,12 +64,10 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       //  this.user = JSON.parse(sessionStorage.getItem('user'));
       this.subProfile = this.authService.getUserStatusListener().subscribe(profileData => {
         this.profileService.getProfiles();
-          const user = profileData.profile;
           this.user = profileData.profile;
-          this.userPic = profileData.profile.imagePath;
           if(!profileData.profile || !profileData.profile && !this.userPic) {
               this.userLocation = 'Please Update your Profile';
-              this.userName = 'John Doe'; 
+              this.userName = 'John Doe';               
             } else {
               this.userName = profileData.profile.username;
               localStorage.setItem('username', this.userName!);
@@ -90,6 +88,8 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 changeProfilePic() {
   const imagePath = this.imageForm.value.imagePath
   this.profileService.changeProfilePic(imagePath);
+  this.showAddPicButton = false;
+  this.imagePreview = '';
 }
 onImagePicked(event: Event) {
   const file = (event.target as HTMLInputElement).files![0];

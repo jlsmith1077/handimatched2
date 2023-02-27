@@ -13,7 +13,7 @@ tr.example-detail-row {
 }
 
 tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
+  background: rgb(76, 134, 241);
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
@@ -83,12 +83,24 @@ tr.example-element-row:not(.example-expanded-row):active {
 .container {
   margin: 0em;
   padding: 0em !important;
+  width: 100%;
+  height: 100%;
+}
+.mat-card-title {
+  color: blue;
+  padding: 1em;
+  text-align: center;
 }
 .ng-contain {
-  max-width: 100%;
+  height: 100%;
+
 }
 .mat-header-cell {
   font-style: italic;
+}
+.example-element-position img {
+  width: 200px;
+  height: auto;
 }
 /* @media screen and (orientation: portrait) {
   .example-element-position {

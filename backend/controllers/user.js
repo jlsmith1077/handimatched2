@@ -15,9 +15,20 @@ exports.userSignup = (req, res, next) => {
       });
       user.save()
       .then(result => {
+          console.log('token ', result.email, result._id)
+        const token = jwt.sign(
+            { email: result.email,
+              userId: result._id,
+            },
+            process.env.JWT_KEY,
+            { expiresIn: '10h' }
+        );
           res.status(201).json({
+              token: token,
+              expiresIn: 36000,
               message: 'User created',
-              result: result
+              userId: result._id,
+              user: user
           });
       })
       .catch(err => {
@@ -29,6 +40,7 @@ exports.userSignup = (req, res, next) => {
 }
 
 exports.userSignin = (req, res, next) => {
+    console.log('signing in :)');
     let fetchedProfile;
     let fetchedUser;
     User.findOne({ email: req.body.email }).collation({locale: 'en_US', strength:1})
@@ -49,10 +61,10 @@ exports.userSignin = (req, res, next) => {
             Profile.findOne({ email: req.body.email }).collation({locale: 'en_US', strength:1})
             .then(resProfile => {
                 if (!resProfile) {
+                    console.log('token 1', fetchedUser.email, fetchedUser._id)
                     const token = jwt.sign(
                         { email: fetchedUser.email,
-                            userId: fetchedUser._id,
-                            username: fetchedUser.username    
+                            userId: fetchedUser._id    
                         },
                         process.env.JWT_KEY,
                         { expiresIn: '10h'}
@@ -64,14 +76,15 @@ exports.userSignin = (req, res, next) => {
                             username: fetchedUser.username
                         });
                     } else {
-                    fetchedProfile = resProfile;                    
-                    const token = jwt.sign(
-                        { email: fetchedUser.email,
-                        userId: fetchedUser._id    
-                        },
-                        process.env.JWT_KEY,
-                        { expiresIn: '10h'}
-                    );
+                        fetchedProfile = resProfile;                    
+                        console.log('token 2', fetchedProfile.email, fetchedProfile._id)
+                        const token = jwt.sign(
+                            { email: fetchedUser.email,
+                                userId: fetchedUser._id    
+                            },
+                            process.env.JWT_KEY,
+                            { expiresIn: '10h'}
+                            );
                     res.status(200).json({
                         token: token,
                         expiresIn: 36000,

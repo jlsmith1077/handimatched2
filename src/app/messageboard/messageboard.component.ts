@@ -57,17 +57,17 @@ export class MessageboardComponent implements OnInit, OnDestroy {
   userId: string | undefined;
   username: string | undefined;
   userPosition: number | undefined;
-  private postsSub: Subscription = new Subscription;
   private likesSub: Subscription = new Subscription;
   private modeSub: Subscription = new Subscription;
-  authStatusSub: Subscription = new Subscription;
   private commentSub: Subscription = new Subscription;
+  private postsSub: Subscription = new Subscription;
+  authStatusSub: Subscription = new Subscription;
   userPostsStatus: Subscription = new Subscription;
+  subProfile: Subscription = new Subscription;
   comment: Comment | undefined;
   commentsReceived = false;
   profile: Profile | undefined;
   profiles: Profile[] = [];
-  subProfile: Subscription = new Subscription;
   mode: string | undefined;
   @Output() editmode = new Subject<string>();
   index: string | undefined;
@@ -318,6 +318,7 @@ onDelete(postId: string) {
      this.authStatusSub.unsubscribe();
      this.postsSub.unsubscribe();
      this.userPostsStatus.unsubscribe();
+     this.subProfile.unsubscribe();
    }
 }
 export class ExampleDataSource extends DataSource<any> {

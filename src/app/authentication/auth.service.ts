@@ -64,76 +64,45 @@ export class AuthService {
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
-      .post(backendURL + '/signup', authData)
+      .post<{ token: string; expiresIn: number, message: string, user: AuthData, userId: string}>(backendURL + '/signup', authData)
       .subscribe((response) => {
-        this.router.navigate(['/signin']);
+        this.userId = response.userId;
+        this.creator = response.userId;
+        sessionStorage.setItem('userId', this.userId);
+        sessionStorage.setItem('creator', this.creator);
+        sessionStorage.setItem('email', response.user.email.toLowerCase());
+        this.setAuthTimer(response.expiresIn);
+        this.isAuthenticated = true;
+        this.authStatusListener.next(true);
+        this.mode = 'create';
+        const now = new Date();
+        const expirationDate = new Date(now.getTime() + response.expiresIn * 18000);
+        this.saveAuthData(response.token, expirationDate, response.userId);
+        console.log('save auth data', response.token, expirationDate, response.userId)  
+        this.router.navigate(['/']);
       }, error => {
         this.authStatusListener.next(false);
       });
   }
 
-  googleLogin(user: SocialUser ) {
-    const storage = user;
-    let userDetails: any;
-    
-    if(storage) {
-        let userDetails = storage;
-        sessionStorage.setItem('userPic', userDetails.photoUrl);
-        localStorage.setItem('email', userDetails.email);
-        this.http.post<{ message: string, token: string; expiresIn: number, userId: string, username: string, creator: string, user: any}>(
-          backendURL + '/socialSignin', userDetails
-        )
-        .subscribe(response => {
-          const user = response.user;
-          sessionStorage.setItem('user', JSON.stringify(response.user));
-          const token = response.token;
-          this.token = token;
-          if (token) {
-            const expiresInDuration = response.expiresIn;
-            this.setAuthTimer(expiresInDuration);
-            this.isAuthenticated = true;
-            this.username = response.username;
-            this.userId = response.userId;
-            this.creator = response.userId;
-            sessionStorage.setItem('userId', this.userId);
-            sessionStorage.setItem('creator', this.creator);
-            this.authStatusListener.next(true);
-            console.log('auth service response', response.user);
-            this.mode = 'edit';
-          this.user.next({profile: response.user, mode: this.mode});
-          const now = new Date();
-          const expirationDate = new Date(now.getTime() + expiresInDuration * 18000);
-          console.log(expirationDate);
-          this.saveAuthData(token, expirationDate, this.userId);
-          const email = localStorage.setItem('email', userDetails.email.toLowerCase());
-          this.router.navigate(['profiles']);
-          }
-        }, error => {
-          this.authStatusListener.next(false);
-        });
-    
-      } else {
-      this.logout();
-    }
-
-  }
-
+  
   login(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
-      .post<{ token: string; expiresIn: number, userId: string, username: string, user: any}>(
-        backendURL + '/signin',
+    .post<{ token: string; expiresIn: number, userId: string, username: string, user: any}>(
+      backendURL + '/signin',
         authData
-      )
-      .subscribe(response => {
+      ).
+      subscribe(response => {
+        console.log('response', response.userId)
         if(response.user) {
-          console.log('Sign In')
-            const user = response.user;
-            sessionStorage.setItem('user', JSON.stringify(response.user));
-            const token = response.token;
-            this.token = token;
-            if (token) {
-              console.log('Sign In')
+          sessionStorage.setItem('user', JSON.stringify(response.user));
+          const profile_id = response.user._id;
+          const token = response.token;
+          if (token) {
+              this.token = token;
+              console.log('Got Token Sign In')
+              sessionStorage.setItem('profile_id', profile_id);
               this.userId = response.userId;
               this.creator = response.userId;
               sessionStorage.setItem('userId', this.userId);
@@ -150,7 +119,6 @@ export class AuthService {
               console.log(expirationDate);
               this.saveAuthData(token, expirationDate, this.userId);
               localStorage.setItem('email', authData.email.toLowerCase());
-              const email = localStorage.getItem('email');
               this.router.navigate(['/profiles']);
           }
         } else {
@@ -166,7 +134,6 @@ export class AuthService {
             sessionStorage.setItem('userId', this.userId);
             sessionStorage.setItem('creator', this.creator);
             this.authStatusListener.next(true);
-            console.log('mode', this.mode);
             if(response.username) {
               console.log('Sign In')
               this.user.next({profile: response.user, mode: this.mode});
@@ -189,8 +156,53 @@ export class AuthService {
       }, error => {
         this.authStatusListener.next(false);
       });
-  }
-
+    }
+    
+    googleLogin(user: SocialUser ) {
+      const storage = user;
+      let userDetails: any;
+      
+      if(storage) {
+          let userDetails = storage;
+          sessionStorage.setItem('userPic', userDetails.photoUrl);
+          localStorage.setItem('email', userDetails.email);
+          this.http.post<{ message: string, token: string; expiresIn: number, userId: string, username: string, creator: string, user: any}>(
+            backendURL + '/socialSignin', userDetails
+          )
+          .subscribe(response => {
+            const user = response.user;
+            sessionStorage.setItem('user', JSON.stringify(response.user));
+            const token = response.token;
+            this.token = token;
+            if (token) {
+              const expiresInDuration = response.expiresIn;
+              this.setAuthTimer(expiresInDuration);
+              this.isAuthenticated = true;
+              this.username = response.username;
+              this.userId = response.userId;
+              this.creator = response.userId;
+              sessionStorage.setItem('userId', this.userId);
+              sessionStorage.setItem('creator', this.creator);
+              this.authStatusListener.next(true);
+              console.log('auth service response', response.user);
+              this.mode = 'edit';
+            this.user.next({profile: response.user, mode: this.mode});
+            const now = new Date();
+            const expirationDate = new Date(now.getTime() + expiresInDuration * 18000);
+            console.log(expirationDate);
+            this.saveAuthData(token, expirationDate, this.userId);
+            const email = localStorage.setItem('email', userDetails.email.toLowerCase());
+            this.router.navigate(['profiles']);
+            }
+          }, error => {
+            this.authStatusListener.next(false);
+          });
+      
+        } else {
+        this.logout();
+      }
+  
+    }
   autoAuthUser() {
     const authInformation = this.getAuthData();
     setTimeout(() => {
@@ -207,7 +219,6 @@ export class AuthService {
         this.authStatusListener.next(true);
         this.mode = 'edit';
         const profile = sessionStorage.getItem('user') as string;
-        console.log('auth ervice', profile)
         this.user.next({profile: profile, mode: this.mode})
       } else {
         this.logout();

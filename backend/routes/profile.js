@@ -21,12 +21,6 @@ router.put("/:id",
   profileControllers.profileEdit
   
 );
-router.patch("",
-  checkAuth,
-  fileExtract,
-  profileControllers.changeProfilePic
-  
-);
 
 router.put("/social",
   fileExtract,

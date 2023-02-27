@@ -15,6 +15,7 @@ constructor(private dialog: MatDialog) {
           catchError((error: HttpErrorResponse) => {
               let errorMessage = 'Unknown error occurred!';
               if (error.error.message) {
+                console.log('in error message')
                 errorMessage = error.error.message;
               }
               this.dialog.open(ErrorComponent, {data: {message: errorMessage}});

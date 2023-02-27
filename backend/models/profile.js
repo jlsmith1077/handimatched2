@@ -11,7 +11,17 @@ const profileSchema = mongoose.Schema({
     imagePath: { type: String },
     creator: { type: String, ref:'User', required: true },
     friends: { type: Array },
-    friendsAmt: { type: Number, default: 0}
+    friendsAmt: { type: Number, default: 0},
+    imageGallery: {type: [{
+        title: {type: String},
+        path: {type: String, required: true},
+        likes: {type: Number}
+    }]},
+    videoGallery: {type: [{
+        title: {type: String},
+        path: {type: String, required: true},
+        likes: {type: Number}
+    }]}
 });
 
 profileSchema.plugin(uniqueValidator);

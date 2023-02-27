@@ -1,9 +1,9 @@
 <mat-card>
         <mat-card-content *ngIf="userPic">
-            <img class="mat-elevation-z8" mat-card-img src="{{userPic}}" (error)="setDefaultPic()">
+            <img class="mat-elevation-z8" mat-card-img alt="Profile Image" src="{{userPic}}" (error)="setDefaultPic()">
         </mat-card-content>
         
-        <!-- <button color="primary" mat-stroked-button type="button" (click)="imagePicker.click()">Edit Profile Pic</button> -->
+        <button *ngIf="userPic != '../../../assets/images/default_pic.jpg' " color="primary" mat-stroked-button type="button" (click)="imagePicker.click()">Edit Profile Pic</button>
         <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
         <div style="max-width: 100%;" class="image-preview" *ngIf="imagePreview !== '' && imagePreview && imageForm.get('imagePath')!.valid">
             <img mat-card-img [src]="imagePreview" alt="Profile Image">

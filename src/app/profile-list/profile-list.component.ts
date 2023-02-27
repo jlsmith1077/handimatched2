@@ -11,6 +11,8 @@ import { CustomPaginator } from './customPagination';
 import { MatTableDataSource } from '@angular/material/table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort } from '@angular/material/sort';
+import { SlideInterface } from '../slider_interface';
+import { ImageGallery } from '../image_gallery.model';
 
 interface sortList {
   value: string;
@@ -34,6 +36,16 @@ interface sortList {
 })
 
 export class ProfileListComponent implements OnInit, OnDestroy {
+  imageToShow: string = '';
+  imageArray: string [] = [];
+  show: number = 1;
+  start: number = 0;
+  elementId: string = '';
+  disableNext: boolean = false;
+  disablePrev: boolean = true;
+  openImageGallery: Boolean = false;
+  openVideoGallery: Boolean = false;
+  slides: SlideInterface[] = [];
   profiles: Profile[] = [];
   userPic: string | undefined;
   displayUsername: any;
@@ -49,7 +61,6 @@ export class ProfileListComponent implements OnInit, OnDestroy {
   totalPosts = 10;
   postsPerPage = 2;
   currentPage = 1;
-  pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
   userId: string | undefined;
   isLoading = false;
@@ -79,6 +90,7 @@ export class ProfileListComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(this.profiles)
         this.dataSource.paginator = this.paginator!;
         this.dataSource.sort = this.sort!;
+        console.log('profiles', this.dataSource.data)
        });
        this.selectedSort = localStorage.getItem('selectedSort') as string;
        this.isLoading = true;
@@ -93,8 +105,58 @@ export class ProfileListComponent implements OnInit, OnDestroy {
         console.log('profile cmnt', this.profiles )
   }
 
+  emptyImageArray(event: any, imageGallery: SlideInterface[]) {
+    this.imageArray = [];
+    this.show=  1;
+    this.start = 0;
+    imageGallery.forEach(image => {
+      this.imageArray.push(image.path)
+    });
+    console.log('in empty array func', this.imageArray, imageGallery)
+  }
+
   ngAfterVieInit() {
     this.dataSource.paginator = this.paginator!;
+  }
+  prev(){
+    if(this.start == 0) {
+      return
+    } else {
+      this.show--;
+      this.start--;
+      this.disableNext = false;
+      if(this.start == 0) {
+        this.disablePrev = false;
+      }
+    }
+} 
+next(){
+    if(this.show == this.imageArray.length) {
+      return
+    } else {
+      this.show++;
+      this.start++;
+      this.disablePrev = true;
+      if(this.show == this.imageArray.length) {
+        this.disableNext = true;
+      }
+    }
+}
+  openCloseImageGallery(imageGallery: SlideInterface[], elementId: string) {
+    console.log('profile list slides', this.slides);
+    if(this.openImageGallery){
+      this.openImageGallery = false;
+    } else {
+      this.openImageGallery = true;
+    }
+    console.log('openimagegallery', this.openImageGallery )
+  }
+  openCloseVideoGallery() {
+    if(this.openVideoGallery){
+      this.openVideoGallery = false;
+    } else {
+      this.openVideoGallery = true;
+    }
   }
 
   applyFilter(event: Event) {

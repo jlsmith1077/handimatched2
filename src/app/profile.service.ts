@@ -6,16 +6,20 @@ import { AuthService } from './authentication/auth.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { environment } from './../environments/environment';
-import { User } from './authentication/user.model';
+import { ImageGallery } from './image_gallery.model';
+import { VideoGallery } from './video_gallery.model';
+import { SlideInterface } from './slider_interface';
 
 const backendURL = environment.apiURL + "/profile/" ;
 const backendURL3 = environment.apiURL + "/friend/";
+const backendURLPics = environment.apiURL + "/media/";
 const backendURL2 = environment.apiURL + "/weather?address=";
-const default_pic = '../'
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {  
+export class ProfileService { 
+  slides: SlideInterface[] = []; 
+  imageGalleryUpdate = new Subject<SlideInterface[]>();
   pictureUpdated = new Subject<string>();
   routerStatusListener = new Subject<boolean>();
   profilesChanged = new Subject<Profile[]>();
@@ -34,12 +38,14 @@ export class ProfileService {
   mode = 'login';
   address = sessionStorage.getItem('location') as string;
   selectedSort: string = '';
-  private subProfile: Subscription = new Subscription
-  private subscription: Subscription = new Subscription
 
   constructor(private http: HttpClient, private router: Router, private Auth: AuthService) {
     
    }
+   getImageGalleryListener(){
+    console.log('sending slides');
+    return this.imageGalleryUpdate.asObservable();
+  }
   getPictureUpdateListener(){
     return this.pictureUpdated.asObservable();
   }
@@ -64,7 +70,7 @@ export class ProfileService {
       .pipe(
         map((profileData) => {
           return {
-            profiles: profileData.profiles.map((profile: { _id: string; fullname: string; imagePath: string; email: string; location: string; username: string; gender: string; interest: string; creator: string; friends: []; friendsAmt: number; }) => {
+            profiles: profileData.profiles.map((profile: { _id: string; fullname: string; imagePath: string; email: string; location: string; username: string; gender: string; interest: string; creator: string; friends: []; friendsAmt: number;  imageGallery: ImageGallery[], videoGallery: VideoGallery[]}) => {
               if(!profile.imagePath) {
                 return {
                   id: profile._id,
@@ -77,7 +83,9 @@ export class ProfileService {
                   interest: profile.interest,
                   creator: profile.creator,
                   friends: profile.friends,
-                  friendsAmt: profile.friendsAmt
+                  friendsAmt: profile.friendsAmt,
+                  imageGallery: profile.imageGallery,
+                  videoGallery: profile.videoGallery
                 }
               } else {
               return {
@@ -91,7 +99,9 @@ export class ProfileService {
                 interest: profile.interest,
                 creator: profile.creator,
                 friends: profile.friends,
-                friendsAmt: profile.friendsAmt
+                friendsAmt: profile.friendsAmt,
+                imageGallery: profile.imageGallery,
+                videoGallery: profile.videoGallery
               } };
             }),
           };
@@ -106,12 +116,22 @@ export class ProfileService {
         });
       });
   }
+  getImageGallery() {
+    this.imageGalleryUpdate.next(this.slides)
+  }
+  imageGalleryDisplay(slides: SlideInterface[]) {
+    this.slides = slides;
+  }
   changeProfilePic(imagePath: File) {
+    const id = sessionStorage.getItem('profile_id') as string;
+    console.log('in profile service profile ID', id)
+    const title = 'updated pic';
     let profileData: FormData;
     profileData = new FormData();
-    profileData.append('imagePath', imagePath, 'updated pic')
+    profileData.append('id', id)
+    profileData.append('image', imagePath, title)
     this.http.patch<{message: string, imagePath: any}>(
-      backendURL, profileData
+      backendURLPics, profileData
     ).subscribe( returnData => {
       this.getProfiles();
       this.pictureUpdated.next(returnData.imagePath);
@@ -119,7 +139,7 @@ export class ProfileService {
   }
   getProfileEdit(id: string) {
     this.http.get<{message: string, profile: Profile}>(
-      backendURL+ id)
+      backendURL + id)
       .subscribe( returnData => {
       this.profileEditUpdate.next(returnData.profile);
     });
@@ -158,7 +178,7 @@ export class ProfileService {
   getProfileCreator(creator: any) {
     return this.profiles[creator];
   }
-  getProfile2(id: string | undefined) {
+  getProfile2(id: string) {
     return {...this.profiles.find(p => p.id === id)};
   }
 
@@ -186,7 +206,26 @@ export class ProfileService {
       });
     }
   }
-
+  addProfileImages(title: string, path: string | File) {
+    const addImages: string = 'addImages';
+    const id = sessionStorage.getItem('profile_id') as string;
+    const creator = localStorage.getItem('userId') as string;
+    const data = new FormData();
+    data.append('creator', creator)
+    data.append('id', id);
+    data.append('title', title);
+    data.append('image', path, title);
+    console.log('Data in ProfileImages func', data)
+    // const media = '/media';
+    this.http.put<{
+      message: string, profile: Profile
+    }>(backendURLPics, data )
+    .subscribe(response => {
+      this.getProfiles();
+      console.log('response add image', response.message);
+      // this.pictureUpdated.next(response.profile.imagePath);
+    });
+  }
   addProfile(username: string, location: string,
              fullname: string, email: string, gender: string,
              interest: string, imagePath: string | File) {
@@ -197,7 +236,7 @@ export class ProfileService {
     profileData.append('email', email);
     profileData.append('gender', gender);
     profileData.append('interest', interest);
-    profileData.append('image', imagePath);
+    profileData.append('image', imagePath, username);
     this.http.
       post<{ message: string;
              profile: any }>
@@ -212,6 +251,8 @@ export class ProfileService {
         const userPic = sessionStorage.setItem('userPic', response.profile._doc.imagePath);
         const profile = response.profile._doc;
         this.Auth.user.next(profile);
+        this.pictureUpdated.next(response.profile.imagePath);
+        this.getProfiles();
         this.router.navigate(['/']);
 
       });
@@ -235,10 +276,13 @@ export class ProfileService {
                 fullname: string,
                 creator: string,
                 friends: [],
-                friendsAmt: number) {
+                friendsAmt: number,
+                imageGallery: ImageGallery[],
+                videoGallery: VideoGallery[]) {
 let profileData: Profile | FormData;
 this.mode = 'edit';
 if (typeof image === 'object') {
+  console.log('in formData profile service')
   profileData = new FormData();
   profileData.append('id', id);
   profileData.append('username', username);
@@ -251,11 +295,15 @@ if (typeof image === 'object') {
   profileData.append('creator', creator);
   profileData.append('friends', JSON.stringify(friends));
   profileData.append('friendsAmt', JSON.stringify(0));
+  profileData.append('imageGallery', JSON.stringify(0));
+  profileData.append('videoGallery', JSON.stringify(0));
 } else {
   profileData = {
-    id: id, username: username, email: email, imagePath: image, location: location, interest: interest, gender: gender, fullname: fullname, creator: creator, friends, friendsAmt 
+    id: id, username: username, email: email, imagePath: image, location: location, interest: interest, gender: gender, fullname: fullname, creator: creator, friends, friendsAmt, imageGallery, videoGallery
+
   };
 }
+console.log('profileData in edit of profile service - id:', id, 'userId', localStorage.getItem('userId'))
 this.http.put<{message: string, profile: Profile}>(backendURL + id, profileData)
 .subscribe(returnData => {
     const id = sessionStorage.getItem('userId') as string;
@@ -264,7 +312,8 @@ this.http.put<{message: string, profile: Profile}>(backendURL + id, profileData)
     this.profilesUpdated.next({
       profiles: [...this.profiles]
     });
-    this.profileEditUpdate.next(returnData.profile);
+    this.getProfiles();
+    this.pictureUpdated.next(returnData.profile.imagePath);
     this.router.navigate(['/']);
     });
 }

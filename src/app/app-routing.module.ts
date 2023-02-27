@@ -9,7 +9,6 @@ import { GoogleLoginComponent } from './authentication/google-login/google-login
 import { GodaddyComponent  } from './godaddy/godaddy.component';
 import { AuthGuard } from './authentication/auth-guard';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
-import { ProfileDetailComponent } from './profile-edit/profile-detail/profile-detail.component';
 import { MessageboardComponent } from './messageboard/messageboard.component';
 import { PostCreateComponent } from './messageboard/post-create/post-create.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -20,7 +19,6 @@ const routes: Routes = [
   {path: 'profiles', component: ProfileListComponent, children: [
     { path: 'create1', component: ProfileEditComponent},
     { path: 'edit/:id', component: ProfileEditComponent },
-    { path: ':id', component: ProfileDetailComponent },
   ]},
   { path: 'signup', component: SignupComponent },
   { path: 'signin', component: SigninComponent },

@@ -41,7 +41,6 @@ import { HomeComponent } from './home/home.component';
 import { GodaddyComponent } from './godaddy/godaddy.component';
 import { ProfileItemComponent } from './profile-list/profile-item/profile-item.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
-import { ProfileDetailComponent } from './profile-edit/profile-detail/profile-detail.component';
 import { LikeComponent } from './like/like.component';
 import { MessageboardComponent } from './messageboard/messageboard.component';
 import { CommentsComponent } from './messageboard/comments/comments.component';
@@ -54,6 +53,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ReplyComponent } from './message/reply/reply.component';
 import { ReplyListComponent } from './message/reply/reply-list/reply-list.component';
 import { MessageListComponent } from './message/message-list/message-list.component';
+import { AddImagesComponent } from './profile-edit/media-folder/add-images/add-images.component';
 
 
 @NgModule({
@@ -68,7 +68,6 @@ import { MessageListComponent } from './message/message-list/message-list.compon
     GodaddyComponent,
     ProfileItemComponent,
     ProfileEditComponent,
-    ProfileDetailComponent,
     LikeComponent,
     MessageboardComponent,
     CommentsComponent,
@@ -81,7 +80,8 @@ import { MessageListComponent } from './message/message-list/message-list.compon
     SettingsComponent,
     ReplyComponent,
     ReplyListComponent,
-    MessageListComponent
+    MessageListComponent,
+    AddImagesComponent
   ],
   imports: [
     AppRoutingModule,

@@ -1,3 +1,6 @@
+import { ImageGallery } from "./image_gallery.model";
+import { VideoGallery } from "./video_gallery.model";
+
 export class Profile {
     public id: string;
     public username: string;
@@ -10,6 +13,8 @@ export class Profile {
     public creator: string;
     public friends: [];
     public friendsAmt: number;
+    public imageGallery: ImageGallery[];
+    public videoGallery: VideoGallery[];
 
     constructor(fullname: string,
                 location: string,
@@ -21,7 +26,9 @@ export class Profile {
                 id: string,
                 creator: string,
                 friends: [],
-                friendsAmt: number
+                friendsAmt: number,
+                imageGallery: ImageGallery[],
+                videoGallery: VideoGallery[]
                 ) {
         this.fullname = fullname;
         this.imagePath = imagePath;
@@ -34,5 +41,7 @@ export class Profile {
         this.creator = creator;
         this.friends = friends;
         this.friendsAmt = friendsAmt;
+        this.imageGallery = imageGallery;
+        this.videoGallery = videoGallery;
     }
 }

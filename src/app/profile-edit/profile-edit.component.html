@@ -1,6 +1,6 @@
 <mat-card class="mat-elevation">
-    <mat-card-title *ngIf="mode === 'edit'">Edit Your Profile</mat-card-title>
-    <mat-card-title *ngIf="mode === 'create'"> Create Profile</mat-card-title>
+    <mat-card-title class="mat-elevation-z8" *ngIf="mode === 'edit'">Edit Your Profile</mat-card-title>
+    <mat-card-title class="mat-elevation-z8" *ngIf="mode === 'create'"> Create Profile</mat-card-title>
       <mat-spinner *ngIf="isLoading"></mat-spinner>
   
       <form  [formGroup]="profileForm" (submit)="onSubmit()"
@@ -49,17 +49,23 @@
             <input type="radio" value="Female" formControlName="gender">
             <span >female</span>  
               </div>
-                  <button mat-stroked-button type="button" (click)="imagePicker.click()">Select an Image</button>
-                  <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
-                <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && profileForm.get('imagePath')!.valid">
-                  <img *ngIf="imagePreview" [src]="imagePreview" [alt]="profileForm.value.username">
-                  <img *ngIf="!imagePreview" src="{{image}}" [alt]="profileForm.value.username">
-                  <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
-                </div> 
+              <div style="display: flex; flex-flow: column; align-items: center; margin-bottom: 0em !important">
+                <button mat-stroked-button type="button" (click)="imagePicker.click()">Select Profile Image</button>
+                <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
+              </div>
+              <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && profileForm.get('imagePath')?.valid">
+                <img [src]="imagePreview" [alt]="profileForm.value.username">
+                <!-- <img *ngIf="!imagePreview" src="{{image}}" [alt]="profileForm.value.username"> -->
+                <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
+              </div> 
           <mat-card-actions class="action"> 
           <button *ngIf="mode === 'create'" [disabled]="!profileForm.valid" type="submit" mat-raised-button style="background-color: green; color: white;">Save</button>
           <button *ngIf="mode === 'edit'" [disabled]="!profileForm.valid" type="submit" mat-raised-button style="background-color: green; color: white;">Update</button>
           <button mat-raised-button color="warn" [routerLink]="['/']">Cancel</button>
           </mat-card-actions>
         </form>
+        <div *ngIf="mode != 'create'">
+          <mat-label style="color: blue;">add Media</mat-label>
+          <app-add-images style="display: flex; flex-flow: row wrap; gap: 1em; margin-left: 1em;" [profile]="profile" ></app-add-images>
+        </div>
       </mat-card>

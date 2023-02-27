@@ -1,10 +1,13 @@
 mat-card {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 100vh;
     max-width: 100%;
 }
 mat-label {
     font-style: italic;
+    color: rgb(117, 117, 250);
 }
 img {
     height: 200px;
@@ -20,9 +23,14 @@ form {
 }
 .mat-form-field {
     text-align: center;
-    width: 75%;
     height: 100%;
     flex: 1;
+}
+.mat-card-title {
+    margin: 1em;
+    padding: .1em;
+    color: blue;
+    width: fit-content;
 }
 input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
     border: 1px solid red;

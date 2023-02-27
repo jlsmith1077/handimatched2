@@ -18,6 +18,8 @@ exports.profileCreate = (req, res, next) => {
       creator: req.userData.userId,
       friends: [],
       friendsAmt: req.body.friendsAmt,
+      imageGallery: req.body.imageGallery,
+      videoGallery: req.body.videoGallery
      });
     profile.save()
     .then(createdProfile => {
@@ -68,6 +70,7 @@ exports.profileCreate = (req, res, next) => {
   }
 
   exports.profileEdit = (req, res, next) => {
+    console.log('creator id', req.userData.userId)
     let imagePath = req.body.imagePath;
     if (req.file) {
       const url = req.protocol + "://" + req.get("host");
@@ -85,9 +88,12 @@ exports.profileCreate = (req, res, next) => {
       creator: req.userData.userId,
       friends: req.body.friends,
       friendsAmt: req.body.friendsAmt,
+      imageGallery: req.body.imageGallery,
+      videoGallery: req.body.videoGallery
     });
     Profile.updateOne({ _id: req.params.id, creator: req.userData.userId}, profile)
     .then(result => {
+      console.log('result', result)
       if (result.modifiedCount > 0) {
       res.status(200).json({ 
         message: 'Update successful!',
@@ -104,40 +110,8 @@ exports.profileCreate = (req, res, next) => {
       })
     });
   }
-  exports.changeProfilePic = (req, res, next)  => {
-    console.log('in change profile pic func', req.body.imagePath);
-    const creator = req.userData.userId; 
-    let imagePath = req.body.imagePath;
-    if (req.file) {
-      const url = req.protocol + "://" + req.get("host");
-      imagePath = url + "/images/" + req.file.filename
-    }
-    console.log('through if check', imagePath)
-    Profile.updateOne({creator: creator}, {set: {
-      imagePath: image
-    }
-    })
-    .then(result => {
-      console.log('modified Count', modifiedCount)
-      if (result.modifiedCount > 0) {
-        console.log('successful','result', result);
-      res.status(200).json({ 
-        message: 'Update successful!',
-        imagePath: image
-         });  
-    } else {
-      res.status(401).json({message: 'Not authorized to update profile pic'});
-      }
-    })
-    .catch(error => {
-      res.status(500).json({
-        message: 'Was not able to update profile Pic ', modifiedCount
-      })
-    });
-  }
 
   exports.profileGet = (req, res, next) => {
-    console.log('in profile get func')
     const profileQuery = Profile.find().collation({locale: 'en_US', strength:1});
     let fetchedProfiles; 
     profileQuery.then(documents => {

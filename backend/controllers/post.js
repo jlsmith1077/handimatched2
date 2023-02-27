@@ -112,7 +112,7 @@ exports.postCreate = (req, res, next) => {
      })
      .catch(error => {
        res.status(500).json({
-         message: 'Was unable to retrieve posts'
+         message: 'Was - unable to retrieve posts'
        });
      });
    }

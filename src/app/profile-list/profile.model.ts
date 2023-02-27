@@ -1,15 +1,20 @@
+import { ImageGallery } from "../image_gallery.model";
+import { VideoGallery } from "../video_gallery.model";
+
 export class Profile {
-    public id: string | undefined;
-    public username: string | undefined;
-    public email: string | undefined;
-    public imagePath: string | undefined;
-    public location: string | undefined;
-    public gender: string | undefined;
-    public interest: string | undefined;
-    public fullname: string | undefined;
-    public creator: string | undefined;
-    public friends?: [];
-    public friendsAmt?: number | undefined;
+    public id: string;
+    public username: string;
+    public email: string;
+    public imagePath: string;
+    public location: string;
+    public gender: string;
+    public interest: string;
+    public fullname: string;
+    public creator: string;
+    public friends: [];
+    public friendsAmt: number;
+    public imageGallery?: ImageGallery[];
+    public videoGallery?: VideoGallery[];
 
     constructor(fullname: string,
                 location: string,
@@ -22,8 +27,8 @@ export class Profile {
                 creator: string,
                 friends: [],
                 friendsAmt: number,
-                private tokenn?: string | undefined,
-                private tokenExpirationDate?: Date
+                imageGallery: ImageGallery[],
+                videoGallery: VideoGallery[]
                 ) {
         this.fullname = fullname;
         this.imagePath = imagePath;
@@ -36,13 +41,7 @@ export class Profile {
         this.creator = creator;
         this.friends = friends;
         this.friendsAmt = friendsAmt;
-        this.tokenn = tokenn;
-        this.tokenExpirationDate = tokenExpirationDate
+        this.imageGallery = imageGallery;
+        this.videoGallery = videoGallery;
     }
-    get token() {
-        if (!this.tokenExpirationDate || new Date() > this.tokenExpirationDate) {
-            return null;
-        }
-        return this.tokenn;
-        }
 }
