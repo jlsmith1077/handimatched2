@@ -14,6 +14,7 @@ export class SocketioService {
   private handshake = new Subject<ChatTypesMessage>();
   private creator = localStorage.getItem('creator') as string;
   private username = localStorage.getItem('username') as string;
+  private socketURL = environment.websocketURL
   
 
 
@@ -29,7 +30,7 @@ export class SocketioService {
 
   connect() { 
     console.log('connected in service')
-    this.socket = io('http://jermainsprojects-env.eba-qbcmftm3.us-east-1.elasticbeanstalk.com:8080', {
+    this.socket = io(this.socketURL, {
       transports: ['websocket']
     });
 

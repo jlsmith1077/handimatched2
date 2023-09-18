@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  apiURL: "https://api.jermainsprojects.com/api"  
+  apiURL: "http://api.jermainsprojects.com/api",
+  websocketURL: "http://api.jermainsprojects.com"
   
 };
