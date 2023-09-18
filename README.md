@@ -4,9 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 This also incorporated Node Express to handle backend API calls. 
 Start express server with following command: npm run start:server. The server will be running on port 5001. -
 
-## Development server
+## Angular Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Node Express Development server
+
+Run `npm run start:server` for express server. Navigate to `http://localhost:5001/api/"chosen route". 
 
 ## Code scaffolding
 
