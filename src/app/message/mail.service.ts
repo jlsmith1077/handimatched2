@@ -15,7 +15,9 @@ export class MailService {
     private userOpenMail?: string[];
     private userOpenMailIndex?: number;
     private mails: Mail[] = [];
+    private newMails: Mail[] = [];
     private mailUpdated = new Subject<Mail[]>();
+    private newMailUPdated = new Subject<Mail[]>();
     private isOpen = new Subject<boolean>();
     private openedUpdated = new Subject<string[]>();
 
@@ -23,30 +25,38 @@ export class MailService {
                 private router: Router          
         ) {}
     getMails() {
-        this.http.get<{
+        const creator  = sessionStorage.getItem('creator') as string;
+        const username = sessionStorage.getItem('username') as string;
+        console.log('username', username)
+        const mailData = {creator, username}
+        this.http.patch<{
           message: string,
-          mail: any
-        }>(backendURL)
-        .pipe(map((mailData) => {
-          return mailData.mail.map((mail: { content1: any; creator: any; receiver: any; username: any; receivername: any; _id: any; messageTime: any; userpic: any; opened: any; repliesAmt: any; }) => {
-            return {
-              content1: mail.content1,
-              creator: mail.creator,
-              receiver: mail.receiver,
-              username: mail.username,
-              receivername: mail.receivername,
-              id: mail._id,
-              messageTime: mail.messageTime,
-              userpic: mail.userpic,
-              opened: mail.opened,
-              repliesAmt: mail.repliesAmt
-            };
-          });
-        }))
-        .subscribe(transformedComment => {
-          this.mails = transformedComment;
+          mail: Mail[]
+        }>(backendURL, mailData)
+        .subscribe(mailData => {
+          this.mails = mailData.mail;
           this.mailUpdated.next([...this.mails]);
+          this.newMails = [...this.mails].filter(mail => mail.creator == creator && mail.opened == 'true')
+          this.newMailUPdated.next(this.newMails);
+          // console.log('new user mail', this.newMails.length);
         });
+      }
+      getNewMail() {
+        const creator  = sessionStorage.getItem('creator') as string;
+        let userMail: Mail[] = this.getMailbyId(creator);
+        let newMail: Mail[] = [];
+        userMail = this.getMail(creator);
+        console.log('user mail', userMail);
+        userMail.filter(mail => {
+          if(mail.opened == 'true') {
+            console.log('it was true')  
+            this.newMails.push(mail);
+          }
+        })
+        // return {...userMail.filter(mail => mail.opened == 'true')}
+      }
+      getNewMailListener() {
+        return this.newMailUPdated.asObservable();
       }
       getOpenedStateUpdateListener() {
         return this.openedUpdated.asObservable();
@@ -57,24 +67,55 @@ export class MailService {
       getIsOpenListner() {
         return this.isOpen.asObservable();
       }
-      createMail({ content1, creator, receiver, username, receivername, messageTime, userpic, opened, repliesAmt }: { content1: string; creator: string; receiver: string; username: string, receivername: string, messageTime: object, userpic: string, opened: string, repliesAmt: null }) {
+      createMail( content1: string, creator: string,
+          receiverCreator: string, username: string,
+          receivername: string, messageTime: object,
+          userpic: string, messageImages: File[],
+          messageVideo: File,
+          opened: string 
+          ) {
         // tslint:disable-next-line: object-literal-shorthand
-        const mail: Mail = {id: null, content1: content1, creator: creator, receiver: receiver, username: username, receivername: receivername, messageTime: messageTime, userpic: userpic, opened: opened, repliesAmt };
-        console.log('mail from service', mail);
-        this.http.post<{ mail: Mail }>(backendURL, mail)
-        .subscribe(responseData => {
-          this.mails.push(mail);
-          this.mailUpdated.next([...this.mails]);
-          this.isOpen.next(false);
-          sessionStorage.setItem('username', mail.username);
-        });
+        console.log('userpic creatig message', userpic);
+        const mailData  = new FormData();
+        mailData.append('content1', content1)
+        mailData.append('creator', creator)
+        mailData.append('receiverCreator', receiverCreator)
+        mailData.append('username', username)
+        mailData.append('receivername', receivername)
+        mailData.append('messageTime', JSON.stringify(messageTime))
+        mailData.append('userpic', userpic)
+        for (let messageImage  of messageImages) {
+          mailData.append('images', messageImage)
+          console.log('messageImage', messageImage)
+        }
+        // Array.from(messageImages).forEach(image => mailData.append('images', image, image.name))
+        if(messageVideo) {
+          mailData.append('video', messageVideo)
+          } else {
+            mailData.append('video', '');
+          }
+        mailData.append('opened', JSON.stringify(opened))
+        const mail: Mail = {_id: null, content1: content1, creator: creator,  receiverCreator: receiverCreator, username: username, receivername: receivername, messageTime: messageTime, userpic: userpic, messageImages, messageVideo, opened: opened  };
+        console.log('mail from service', mailData);
+          console.log('in video mail service')
+          this.http.post<{message: string, mail: Mail }>(backendURL, mailData)
+          .subscribe(responseData => {
+            console.log('response data', responseData.message)
+            this.mails.push(mail);
+            this.mailUpdated.next([...this.mails]);
+            this.newMails = [...this.mails].filter(mail => mail.creator == creator && mail.opened == 'true')
+            this.newMailUPdated.next(this.newMails);
+            this.isOpen.next(false);
+            sessionStorage.setItem('username', mail.username);
+          });
       }
       getMail(id: string) {  // id is profile.creator
-        return {...this.mails.find(mail => mail.creator === id)};
+        return {...this.mails.filter(mail => mail.creator === id)};
       }
       getMailbyId(id: string) {
-        return {...this.mails.find(mail => mail.id === id)};
+        return {...this.mails.filter(mail => mail._id === id)};
       }
+
 
     updateOpendedState(mailState: any, id: string, usernames: string[], index: number | undefined) {
       console.log('mailstate', mailState);

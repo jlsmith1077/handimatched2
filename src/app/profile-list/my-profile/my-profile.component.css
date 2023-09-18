@@ -11,11 +11,18 @@ mat-card-title, mat-card-footer {
 } */
 img {
     max-width: 100%;
-    height: auto;
+    height: 250px;
 }
 input[type="file"] {
     visibility: hidden;
     max-width: 100%;
+}
+button {
+    width: 100%;
+    text-align: center;
+}
+.image-preview {
+    width: 100%;
 }
 
 /* @media screen and (orientation: portrait) {

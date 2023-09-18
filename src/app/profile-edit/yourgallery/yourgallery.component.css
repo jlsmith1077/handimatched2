@@ -1,0 +1,42 @@
+mat-card {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery_container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 100%;
+}
+.yourGallery {
+    width: 100%;
+    text-align: center;
+    padding: .5em;
+    color: blue;
+}
+.displayedGallery {
+    border: white solid .1em;
+}
+mat-label {
+    color: blue;
+    padding: .3em;
+    background-color: white;
+    border: solid blue .2em;
+    margin-bottom: 1em;
+}
+.likes {
+    background-color: green;
+    color: white;
+    border: white dotted .1em;
+}
+img {
+    height: 200px;
+    width: auto;
+}
+video {
+    height: 200px;
+    width: auto;
+}

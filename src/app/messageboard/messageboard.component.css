@@ -1,103 +1,93 @@
-button { 
-    border-radius: .5em;
-  }
-  .mat-action-row {
-    width: 100%;
-  }
-  .mat-action-row button { 
-  background-color: rgb(128, 252, 128);
-  border-radius: .5em;
-  }
-  .createPostButton {
-    border-radius: .5em;
-    margin-bottom: 0em !important;
-    margin-right: 1em;
-  } 
-  
-  .mat-action-row button:hover {
-      background-color: rgb(128, 252, 128);
-    }
-    .mat-action-row button:focus {
-        outline-color: transparent;
-        outline-style:solid;
-        outline-width: .1em;
-        /* box-shadow: 0 0 0 4px rgb(128, 252, 128); */
-    }
-    .mat-action-row button:active {
-      background-color: rgb(17, 250, 17);
-    }
-  table {
-    width: 100%;
-  }
-  
-  tr.example-detail-row {
-    height: 0;
-  }
-  
-  tr.example-element-row:not(.example-expanded-row):hover {
-    background: rgb(76, 134, 241);
-  }
-  
-  tr.example-element-row:not(.example-expanded-row):active {
-    background: #5ae750;
-  }
-  
-  .example-element-row td {
-    border-bottom-width: 0;
-  }
-  
-  .example-element-detail {
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    max-width: 100%;
-    height: auto;
-  }
-  .example-element-detail > * {
-    flex: 1;
-  }
-  
-  .example-element-diagram {
-    text-align: center;
-    min-width: 80px;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: fit-content;
-  }
+button, a {
+  background-color: black; border-radius: .5em;
+  text-align: center;
+}
 
-  .example-element-position {
-    margin: 1em;
-    height: auto;
-    min-width: 100%;
-  } 
+.table {
+  max-width: 100%;
+  margin-left: .5em;
+  flex-grow: 1;
+}
 
-  .example-element-symbol img {
-    height: auto;
-    max-width: 100%
-  }
-  .example-element-symbol {
-    text-align: center;
-    font-weight: bold;
-    font-size: x-large;
-    line-height: normal;
-    max-width: 100%;
-  }
+tr.example-detail-row {
+  height: 0;
+  max-width: 100%;
+
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: rgb(76, 134, 241);
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+  max-width: 100%;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
   
-  .example-element-description {
-    padding: 16px;
-    max-width: 100%;
-    text-align: center;
-  }
-  
-  .example-element-description-attribution {
-    opacity: 0.5;
-  }
+}
+
+.example-element-diagram {
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: fit-content;
+  max-width: 100%;
+  text-align: center;
+}
+
+.example-element-position {
+  max-width: 100%;
+  margin: .1em;
+  height: auto;
+}
+.example-element-position img {
+  height: auto;
+  max-width: 100%;
+
+}
+.example-element-symbol {
+  font-size: large;
+  line-height: normal;
+  max-width: 100%;
+}
+
+.example-element-description {
+  padding: 16px;
+  max-width: 100%;
+  text-align: center;
+
+}
+
+.example-element-description-attribution {
+  opacity: 1;
+}
+.example-element-description-attribution button {
+  margin-right: .1em;
+  margin-bottom: .1em;
+  max-width: 100%;
+
+}
   
   /* My CSS */
   
+  mat-card {
+    display: flex;
+    flex-flow: column wrap;
+    height: 100%;
+    width: 100%;
+  }
   .container {
     max-width: 100%;
     padding-bottom: 1em;
@@ -109,21 +99,55 @@ button {
     height: fit-content;
     width: 100%;
   }
-  mat-toolbar {
+  .messagepost {
+    font-size: x-large;
+    line-height: normal;
+    background-color: white;
+    color: black;
+    padding: 1em;
+    border-radius: .5em;
+    font-weight: 550;
+    border: red solid .1em;
+  }
+  mat-header {
+    flex-grow: 1;
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
     height: fit-content;
+    width: 100%;
     padding-top: 2em;
+    gap: 1em;
   }
   mat-card-title {
     margin-top: .2em;
     color: blue;
-    padding: .1em;
+    padding: 1em;
+    text-align: center; 
   }
   .mat-action-row {
     text-align: center;
     gap: 1em;
     margin-bottom: 1em;
+  }
+  a {
+    text-align: center;
+    padding: 1em;
+  }
+  img {
+    height: 600px;
+    width: auto;
+
+  }
+  @media screen and (orientation: portrait) {
+    img {
+      width: 350px;
+      height: auto;
+    }
+  }
+   @media screen and (orientation: portrait) {
+      a {
+      padding-top: 0em;
+    }  
   }
   
   span {

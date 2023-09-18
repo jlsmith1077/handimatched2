@@ -3,21 +3,20 @@
     top: 15%;
     left: 25%;
     width: 50vw;
-    height: fit-content;
-    background: rgba(40, 105, 158, 0.75);
-    z-index: 50;
-    color: black;
-    font-weight: 600pt;
-    text-align: center;
+    height: 50%;
+    background: rgba(69, 116, 154, 0.75);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
     padding-bottom: 2em;
 }
 .center {
     top: 25%;
 }
-.input {
-    padding-top: 1em;
-    text-align: center;
-    color: black;
+input[type="text"] { 
+    padding: 20px 10px;
+    line-height: 28px; 
 }
 mat-label {
     margin: 1em;

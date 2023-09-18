@@ -1,19 +1,16 @@
-<mat-card class="mat-elevation">
-    <mat-card-title class="mat-elevation-z8" *ngIf="mode === 'edit'">Edit Your Profile</mat-card-title>
-    <mat-card-title class="mat-elevation-z8" *ngIf="mode === 'create'"> Create Profile</mat-card-title>
-      <mat-spinner *ngIf="isLoading"></mat-spinner>
-  
-      <form  [formGroup]="profileForm" (submit)="onSubmit()"
-       *ngIf="!isLoading">
-
-        <mat-form-field>
+<mat-card-title class="mat-elevation-z8" *ngIf="mode === 'edit'">Edit Your Profile</mat-card-title>
+<mat-card-title class="mat-elevation-z8" *ngIf="mode === 'create'"> Create Profile</mat-card-title>
+<mat-card class="mat-elevation">  
+  <form  [formGroup]="profileForm" (submit)="onSubmit()">
+      <mat-label>Personal Details </mat-label>
+      <mat-form-field>
         <input          
             matInput
             type="text"
             formControlName="username"
             placeholder="Username">
-            <mat-error *ngIf="profileForm.get('username')?.invalid"> Please Enter Username</mat-error>
-          </mat-form-field>
+        <mat-error *ngIf="profileForm.get('username')?.invalid"> Please Enter Username</mat-error>
+        </mat-form-field>
         <mat-form-field>
         <input
             readonly                
@@ -22,50 +19,54 @@
             formControlName="email"
             placeholder="E-mail">
         </mat-form-field>
-          <mat-form-field>
+        <mat-form-field>
             <input
             matInput
             formControlName="interest"
             type="text"
             placeholder="Your Interest">
-          </mat-form-field>
-          <mat-form-field>
+        </mat-form-field>
+        <mat-form-field>
             <input
             matInput
             formControlName="location"
             type="text"
             placeholder="City, State">
-          </mat-form-field>    
-          <mat-form-field>
+        </mat-form-field>    
+        <mat-form-field>
             <input
               matInput
               type="text"
               formControlName="fullname"
               placeholder="Full Name">
-          </mat-form-field>
-          <div class="row">
+        </mat-form-field>
+        <div class="row">
             <input type="radio" value="Male" formControlName="gender">
-              <span class="radio">male</span>
+            <span class="radio">male</span>
             <input type="radio" value="Female" formControlName="gender">
             <span >female</span>  
-              </div>
-              <div style="display: flex; flex-flow: column; align-items: center; margin-bottom: 0em !important">
-                <button mat-stroked-button type="button" (click)="imagePicker.click()">Select Profile Image</button>
-                <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
-              </div>
-              <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && profileForm.get('imagePath')?.valid">
-                <img [src]="imagePreview" [alt]="profileForm.value.username">
-                <!-- <img *ngIf="!imagePreview" src="{{image}}" [alt]="profileForm.value.username"> -->
-                <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
-              </div> 
-          <mat-card-actions class="action"> 
-          <button *ngIf="mode === 'create'" [disabled]="!profileForm.valid" type="submit" mat-raised-button style="background-color: green; color: white;">Save</button>
-          <button *ngIf="mode === 'edit'" [disabled]="!profileForm.valid" type="submit" mat-raised-button style="background-color: green; color: white;">Update</button>
-          <button mat-raised-button color="warn" [routerLink]="['/']">Cancel</button>
-          </mat-card-actions>
-        </form>
-        <div *ngIf="mode != 'create'">
-          <mat-label style="color: blue;">add Media</mat-label>
-          <app-add-images style="display: flex; flex-flow: row wrap; gap: 1em; margin-left: 1em;" [profile]="profile" ></app-add-images>
         </div>
+        <div style="display: flex; flex-flow: column; align-items: center; margin-bottom: 0em !important">
+            <button mat-stroked-button type="button" (click)="imagePicker.click()">Select Profile Image</button>
+            <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && profileForm.get('imagePath')?.valid">
+          <img [src]="imagePreview" [alt]="profileForm.value.username">
+            <!-- <img *ngIf="!imagePreview" src="{{image}}" [alt]="profileForm.value.username"> -->
+            <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
+        </div> 
+      <mat-card-actions class="action"> 
+      <button *ngIf="mode === 'create'" [disabled]="!profileForm.valid" type="submit" mat-raised-button style="background-color: green; color: white;">Save</button>
+      <button *ngIf="mode === 'edit'" [disabled]="!profileForm.valid" type="submit" mat-raised-button style="background-color: green; color: white;">Update</button>
+      <button mat-raised-button color="warn" [routerLink]="['/']">Cancel</button>
+      </mat-card-actions>
+      </form>
+      <div *ngIf="mode != 'create'">
+        <ng-container *ngIf="mode != 'create'">
+          <app-add-images style="display: flex; flex-flow: row wrap; gap: 1em; margin-left: 1em;" [profile]="profile" ></app-add-images>
+        </ng-container>
+      </div>
       </mat-card>
+      <ng-container *ngIf="mode != 'create'">
+        <app-yourgallery  [profile]="profile" ></app-yourgallery>
+      </ng-container>

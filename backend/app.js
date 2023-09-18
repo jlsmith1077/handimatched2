@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 const postsRoutes = require("./routes/post");
 const profileRoutes = require("./routes/profile");
-const mediaRoutes = require("./routes/media");
+const testRoutes = require("./routes/test");
 const mailRoutes = require("./routes/mail");
 const userRoutes = require("./routes/user");
 const commentsRoutes = require("./routes/comments");
@@ -17,12 +17,19 @@ const likeRoutes = require("./routes/like");
 const dislikeRoutes = require("./routes/dislike");
 const friendRoutes = require("./routes/friend");
 const repliesAmtRoutes = require("./routes/replies_amt");
+const mediaRoutes = require("./routes/media");
+const profilepicRoutes = require("./routes/profilepic");
+const imageLikesRoutes = require("./routes/imagelikes");
+const videoLikesRoutes = require("./routes/videolikes");
+const videoscreenshareRoutes = require("./routes/videoscreenshare");
+const socialLoginRoutes = require("./routes/socialLogin");
 
 
 
 const app = express();
 
 mongoose
+mongoose.set('strictQuery', false)
 .connect(
   "mongodb+srv://jermain:" + 
   process.env.MONGO_ATLAS_PW +
@@ -33,15 +40,16 @@ mongoose
   .catch(() => {
     console.log("Connection failed!");
   });
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "10mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use("/images", express.static(path.join("images")));
-app.use("/videos", express.static(path.join(__dirname, "videos")));
-app.use("/", express.static(path.join(__dirname, "angular")));
+app.use("/videos", express.static(path.join("videos")));
+app.use("/messagemedia", express.static(path.join("messagemedia")));
+app.use("/videochat", express.static(path.join("videochat")));
+// app.use("/", express.static(path.join(__dirname, "angular")));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*", "https://api.jermainsprojects.com");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -53,8 +61,11 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
 app.use("/api/posts", postsRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/test", testRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/mail", mailRoutes);
 app.use("/api/user", userRoutes);
@@ -66,9 +77,14 @@ app.use("/api/like", likeRoutes);
 app.use("/api/dislike", dislikeRoutes);
 app.use("/api/friend", friendRoutes);
 app.use("/api/replies", repliesAmtRoutes);
+app.use("/api/profilepic", profilepicRoutes);
+app.use("/api/imagelikes", imageLikesRoutes);
+app.use("/api/videolikes", videoLikesRoutes);
+app.use("/api/videoscreenshare", videoscreenshareRoutes);
+
 // app.use("/api/weather", weatherRoutes);
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "angular", "index.html"));
-});
+// app.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, "angular", "index.html"));
+// });
 
 module.exports = app;

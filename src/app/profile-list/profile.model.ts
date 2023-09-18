@@ -27,8 +27,8 @@ export class Profile {
                 creator: string,
                 friends: [],
                 friendsAmt: number,
-                imageGallery: ImageGallery[],
-                videoGallery: VideoGallery[]
+                imageGallery?: ImageGallery[],
+                videoGallery?: VideoGallery[]
                 ) {
         this.fullname = fullname;
         this.imagePath = imagePath;

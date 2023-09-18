@@ -1,60 +1,96 @@
 const Profile = require("../models/profile");
 
+exports.changeProfilePic = (req, res, next)  => {
+      const profileQuery = Profile.find().collation({locale: 'en_US', strength:1});
+      let fetchedProfiles; 
+      let results
+      const id =  req.body.id;
+      const url = req.protocol + "://" + req.get("host");
+      let imagePath = url + "/images/" + req.file.filename      
+      Profile.updateOne({creator: id}, { $set: { imagePath: imagePath} })
+      .then(result => {
+        console.log('1st result', result)
+        results = result;
+        profileQuery.then(documents => {
+          fetchedProfiles = documents;     
+        }).then(result2 => {
+          if (results.modifiedCount > 0) {
+              res.status(200).json({ 
+                  message: 'Update successful!',
+                  image: imagePath,
+                  profiles: fetchedProfiles
+                });  
+            } else {
+                  res.status(401).json({message: 'Not authorized to update profile pic'});
+                }
+        })
+      })
+      .catch(error => {        
+        console.log('error', error);
+        res.status(500).json({
+          message: 'Was not able to update pic,'
+        })
+      });
+    }
 
 exports.profileAddMedia = (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
-  const id = req.body.id;
+  console.log('id in PROFILE ADD MEDIA', req.body.id)
   const zero = 0;
-  const creator = req.body.creator
-  let path = url + "/images/" + req.file.filename;  
-  let fetchUser = Profile.updateOne({_id: id}, {$addToSet: 
+  const id = req.body.id;
+  const title = 
+  
+  req.body.title
+  const url = req.protocol + "://" + req.get("host");
+  let imagePath = url + "/images/" + req.file.filename;  
+  Profile.updateOne({creator: id}, {$addToSet: 
     {
       imageGallery: {
-        title: req.body.title,
-        path: path,
-        likes: zero 
+        title: title,
+        path: imagePath,
+        likes: [] ,
+        likesAmt: 0 
       }
     }
   })
-  const profile = Profile.findOne({_id: req.bod.id})
-  fetchUser.then(result => {
-    console.log('result', result);
-    if(result.matchedCount > 0) {
-      res.status(200).json({
-        message: 'update successful',
-        profile: profile,
-      })
-    } else {
-      return res.status(401).json({
-        message: 'update unsuccessful'
-      });
-    }
+  .then(result => {
+    if (result.modifiedCount > 0) {
+      console.log('results', result)
+       res.status(200).json({ 
+          message: 'Update successful!'
+       });  
+  } else {
+        console.log('image not updated no match')
+        res.status(401).json({message: 'Not authorized to update profile pic'});
+      }
   })
   .catch(err => {
-    return res.status(401).json({
+      console.log('image not updated dont know what happened', err)
+      return res.status(401).json({
       message: 'update unsuccessful'
     });
   });
 }
 
-exports.changeProfilePic = (req, res, next)  => {
-  const url = req.protocol + "://" + req.get("host");
-  let imagePath = url + "/images/" + req.file.filename
-  console.log('in change profile pic func and id', req.body.id, '--', imagePath);
-  Profile.updateOne({_id: req.body.id}, { $set: { imagePath: imagePath} })
+exports.deleteMediaFromArray = (req, res, next) => {
+  const id = req.body.id
+  Profile.findOneAndUpdate(
+    {creator: req.userData.userId}, 
+    {$pull: {imageGallery: {_id: id}}}
+  )
   .then(result => {
     if (result.modifiedCount > 0) {
-    res.status(200).json({ 
-      message: 'Update successful!',
-      imagePath: imagePath
+       res.status(200).json({ 
+          message: 'Update successful!'
        });  
   } else {
-    res.status(401).json({message: 'Not authorized to update profile pic'});
-    }
+        console.log('image not updated no match')
+        res.status(401).json({message: 'Not authorized to update profile pic'});
+      }
   })
-  .catch(error => {
-    res.status(500).json({
-      message: 'Was not able to update pic'
-    })
+  .catch(err => {
+      console.log('image not updated dont know what happened', err)
+      return res.status(401).json({
+      message: 'update unsuccessful'
+    });
   });
 }

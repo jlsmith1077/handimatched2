@@ -10,4 +10,6 @@ router.post('/signin', UserController.userSignin);
 
 router.post('/socialSignin', UserController.socialSignin);
 
+router.patch('', UserController.logOut);
+
 module.exports = router;

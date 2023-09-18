@@ -1,6 +1,8 @@
 # Handimatched2
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.5.
+This also incorporated Node Express to handle backend API calls. 
+Start express server with following command: npm run start:server. The server will be running on port 5001. -
 
 ## Development server
 

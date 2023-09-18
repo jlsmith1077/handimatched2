@@ -1,0 +1,56 @@
+<mat-card>
+    <mat-card-title>Create a Video</mat-card-title>
+    <mat-card-content style="text-align: center;">
+        <ng-container *ngIf="!saveTitleToVideo">
+            <form >
+                <mat-form-field style="text-align: center">
+                  <mat-select placeholder="Select a count down" [(ngModel)]="secondsToStart" name="countdown">
+                    <mat-option *ngFor="let num of numbers" [value]="num">
+                      {{num}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              
+                <mat-card-subtitle style="color: blue; display: flex; flex-flow: row wrap; justify-content: center; gap: .5em;"> Start recording in:<p style="color: white;">{{secondsToStart}}</p>  seconds</mat-card-subtitle>
+              </form>
+
+        </ng-container>
+        <ng-container class="titleContainer" *ngIf="saveTitleToVideo">
+            <mat-label>Add Title For Video</mat-label>
+            <form  [formGroup]="titleForm">
+                <mat-form-field>
+                    <input          
+                    matInput
+                    type="text"
+                        formControlName="title"
+                        placeholder="Video Title Here"
+                    >
+                </mat-form-field>
+                <div style="margin-bottom: .2em">
+                      
+                    <button mat-raised-button (click)="saveRecording($event)">Save Now</button>
+                    <button mat-raised-button (click)="openTitleElement()">Cancel</button>
+                </div>
+            </form>
+        </ng-container>
+        <video 
+        #videoElement
+        class="video-container mat-elevation-z8"
+        controls
+        autoplay
+        playsInline
+        >
+        <source [src]="videoBlobUrl" />
+    </video>
+</mat-card-content>
+<mat-card-actions>
+    <button *ngIf="state === 'NONE' && recordType" mat-raised-button (click)="setRecordingType()">Record Video</button>
+    <!-- <button *ngIf="state === 'NONE' && !recordType" mat-raised-button (click)="setRecordingType()">Record Screen</button> -->
+    <button *ngIf="state === 'NONE' && recordType" mat-raised-button (click)="startCanvasRecording()">Start Recording Screen</button>
+    <button *ngIf="state === 'RECORDING'" mat-raised-button (click)="stopRecording()">stop Recording</button>
+    <button *ngIf="state === 'RECORDED' && !saveTitleToVideo" mat-raised-button (click)="downloadRecording()">Download video</button>
+    <!-- <button *ngIf="state === 'RECORDED' && !saveTitleToVideo" mat-raised-button (click)="openTitleElement()">Done Recording</button> -->
+    <button *ngIf="state === 'RECORDED' && !saveTitleToVideo" mat-raised-button (click)="clearRecording()">Clear Recording</button>
+    <button *ngIf="state === 'NONE'  && !saveTitleToVideo" mat-raised-button (click)="startRecording()">Start Recording Video</button>
+</mat-card-actions>
+</mat-card>

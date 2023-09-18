@@ -1,14 +1,18 @@
-<form [formGroup]="profileAddImageForm" >
-    <mat-form-field style="width: 50% !important; text-align: center;">
+<div class="container">
+    <form [formGroup]="profileAddImageForm" >
+    <mat-label style="background-color: white; padding: .2em; color: blue; padding-right: 1em; padding-left: 1em; border-radius: .5em; font-size: large;"   class="mat-elevation-z8">
+        Add a Image to your Gallery
+    </mat-label>
+    <mat-form-field>
         <input          
             matInput
             type="text"
             formControlName="title"
-            placeholder="title"
+            placeholder="Image Title"
             >
-          </mat-form-field>
+    </mat-form-field>
         <button *ngIf="!enableSaveMedia" mat-stroked-button type="button" (click)="imagePicker.click()" style="background-color: green; color: white; font-size: large;">
-            Select Media To Upload
+            Select Image To Upload
         </button>
     <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && profileAddImageForm.get('path')!.valid">
@@ -18,11 +22,60 @@
     </div>
     <mat-card-actions *ngIf="enableSaveMedia"> 
         <button (click)="onSubmit()" mat-raised-button style="background-color: green; color: white;">
-            Save Media
+            Save Image
         </button>
     </mat-card-actions>
-
+    
 </form>
-<div *ngFor="let image of imageArray">
-    <img style="height: 200px; width: 200px;" class="mat-eleveation-z8" src="{{image}}">
+<div style="display: flex; flex-flow: column wrap; padding: 1em; border-radius: .5em; margin-bottom: 1em; gap: 1em; align-items: center;">
+<mat-label style="background-color: white; padding: .2em; margin: 1em; color: blue; padding-right: 1em; padding-left: 1em; border-radius: .5em; font-size: large;">
+    Add a Video to your gallery
+</mat-label>
+<div style="display: flex; flex-flow: row wrap; gap: 1em; margin-bottom: 1em;">
+    <button mat-raised-button (click)="openUpload()"> Upload Video</button>
+    <button mat-raised-button (click)="openRecord()">Record Video</button>
+</div>
+
+<ng-container *ngIf="openUploadVideo == true">
+    
+    <form [formGroup]="profileAddVideoForm" >
+        <mat-form-field>
+            <input          
+                matInput
+                type="text"
+                formControlName="title"
+                placeholder="Video Title"
+                >
+        </mat-form-field>
+            <button *ngIf="!enableSaveMedia" mat-stroked-button type="button" (click)="videoPicker.click()" style="background-color: green; color: white; font-size: large;">
+                Select Video To Upload
+            </button>
+        <input class="video" type="file" #videoPicker (change)="onVideoPicked($event)">
+        <div class="video-preview" *ngIf="videoPreview !== '' && videoPreview && profileAddVideoForm.get('path')!.valid">
+        <video *ngIf="videoPreview" controls autoplay playsInline>
+            <source  [src]="videoPreview">
+        </video>
+        <video *ngIf="!videoPreview"  controls autoplay playsInline>
+            <source  src="{{video}}">
+        </video>
+        <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
+        </div>
+        <mat-card-actions *ngIf="enableSaveVideo"> 
+            <button (click)="onVideoSubmit()" mat-raised-button style="background-color: green; color: white;">
+                Save Video
+            </button>
+        </mat-card-actions>
+        
+    </form>
+
+</ng-container>
+
+<ng-container *ngIf="openRecordVideo == true">
+    <app-record-video>  </app-record-video>
+</ng-container>
+
+</div>
+
+
+
 </div>

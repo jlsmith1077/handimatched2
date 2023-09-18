@@ -1,29 +1,40 @@
-<mat-card style="display: flex; flex-direction: column; height: 100vh;">
+<mat-card style="display: flex; flex-direction: column; height: 100vh; max-width: 100%;">
+  <div> 
+    <button (click)="groupsitesso()">go to groupsite</button>
+  </div>
 <router-outlet></router-outlet>
 <mat-card-content class="container">
   <mat-card-title class="mat-elevation-z8">
     Welcome, Create a profile, and socialize with other members 
   </mat-card-title>
-  <div style="display: flex; flex-direction: row; font-size: large; margin-left: 1em;">
+  <div style="display: flex; flex-direction: row; font-size: large; margin-left: 1em; max-width: 100%;">
     <mat-form-field appearance="standard">
       <mat-label style="font-style: oblique">Filter Profiles</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
     </mat-form-field>
     <span style="display: flex; flex: 1 1 auto"></span>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons 
     aria-label="Select page of profiles">
-  </mat-paginator>
+  </mat-paginator> -->
   </div>
   <table mat-table matSort [dataSource]="dataSource" multiTemplateDataRows>
     <div class="container mat-elevation-z8">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i = index">
     <ng-container *ngIf="column == 'imagePath'">
-      <th style="padding: 0em !important;" mat-header-cell *matHeaderCellDef >User's Pic </th>
+      <th style="padding: 0em !important; color: blue; padding-left: 1em !important;" mat-header-cell *matHeaderCellDef > PIC </th>
       <td style="padding: 0em !important;" mat-cell *matCellDef="let element"> <img style="height: 100px; width: 100px;" mat-card-img src="{{element[column]}}"> </td>
-    </ng-container>
-    <ng-container *ngIf="column != 'imagePath'">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column | uppercase}} </th>
+   </ng-container>
+  <ng-container *ngIf="column != 'imagePath' && column == 'username'">
+    <th style="padding: 0em !important; color: blue;" mat-header-cell *matHeaderCellDef mat-sort-header> USER </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]  | titlecase}} </td>
+  </ng-container>
+  <ng-container *ngIf="column != 'imagePath' && column == 'location'">
+    <th style="padding: 0em !important; color: blue;" mat-header-cell *matHeaderCellDef mat-sort-header> AREA </th>
+    <td mat-cell *matCellDef="let element"> {{element[column]  | titlecase}} </td>
+  </ng-container>
+  <ng-container *ngIf="column != 'imagePath' && column != 'location' && column != 'username'">
+    <th style="padding: 0em !important; color: blue;" mat-header-cell *matHeaderCellDef mat-sort-header>M/F</th>
     <td mat-cell *matCellDef="let element"> {{element[column]  | titlecase}} </td>
   </ng-container>
   </ng-container>
@@ -31,7 +42,7 @@
   <th mat-header-cell *matHeaderCellDef aria-label="row actions" >&nbsp;</th>
   <td mat-cell *matCellDef="let element">
     <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation();">
-      <mat-icon (@detailExpand.start)="emptyImageArray($event, element.imageGallery)" *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+      <mat-icon (@detailExpand.start)="emptyImageArray(element.imageGallery, element.videoGallery)" *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
       <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
     </button>
   </td>
@@ -43,6 +54,9 @@
       <div class="example-element-detail"
           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <div class="example-element-diagram mat-elevation-z8 ">
+          <ng-container *ngIf="element.online == 'true'">
+            <h1 style="color: green;">Online!</h1>
+          </ng-container>
           <div class="example-element-position"> <img [alt]="element.username" mat-card-img src="{{element.imagePath}}"> </div>
           <div class="example-element-symbol"> {{element.location}} </div>
           <div class="example-element-name"> {{element.username}} </div>
@@ -50,26 +64,106 @@
         <div class="example-element-description">
           {{element.description}}
           <span class="example-element-description-attribution">
-            <button mat-stroked-button>Send Message</button>
-            <button mat-stroked-button (click)="openCloseImageGallery(element.imageGallery, element.id)">View Pictures</button>
+            <ng-container *ngIf="!openSendMessage">
+              <button mat-stroked-button (click)="sendMessage(element.username)">Send A Message</button>
+            </ng-container>
+            <ng-container *ngIf="openSendMessage">
+              <button mat-stroked-button style="background-color: red;" (click)="sendMessage(element.username)">Cancel Message</button>
+            </ng-container>
+            <button mat-stroked-button (click)="openCloseImageGallery()">View Pictures</button>
             <button mat-stroked-button (click)="openCloseVideoGallery()">View Videos</button>
           </span>
         </div>
+        <ng-container *ngIf="openSendMessage">
+          <app-message [receivername]="receivername" class="message"></app-message>
+        </ng-container>
+        {{element.videoGallery?.length}}
+        <ng-container *ngIf="openVideoGallery && element.videoGallery.length > 0">
+          <ng-container *ngIf="element.videoGallery.length > 1"> 
+            <mat-card-subtitle>
+              {{element.videoGallery.length}} Videos
+            </mat-card-subtitle>
+          </ng-container>
+          <ng-container *ngIf="element.videoGallery.length == 1">
+              <mat-card-subtitle>
+                {{element.videoGallery.length}} Video
+              </mat-card-subtitle>
+          </ng-container>
+          <div class="mat-elevation-z8 galleries"*ngFor="let video of videoArray | slice:startVideo:showVideo; let i = index;">
+            <mat-label>
+              {{video.title}}
+            </mat-label>
+            
+            <div style="display: flex;flex-direction: row; justify-content: center; align-items: center;">
+                <div>
+                  <button style="font-size: xx-large; background-color: black;" [disabled]="startVideo == 0" mat-button (swipe)="prevVideo()" (click)="prevVideo()">&#8678;</button>
+                </div>
+                <video 
+                      style="height: 250px; width: 250px;border: white solid .1em;"
+                      controls
+                      autoplay
+                      playsInline
+                      alt="Video gallery">
+                      <source  [src]="video.path"/>
+                      
+                </video>
+                <div>
+                  <button style="font-size: xx-large; background-color: black;" [disabled]="showVideo == element.videoGallery.length" mat-button (swipe)="nextVideo()" (click)="nextVideo()">
+                    &#8680;
+                  </button>
+                </div>
+                
+              </div>
+              <ng-container *ngIf="userId != element.creatorn && video.likes">
+                <button [ngStyle]="{ 'background-color': video.likes.indexOf(username) > -1 ? 'green': 'rgb(128, 252, 128)' }"  mat-icon-button class="big" (click)="addVideoLikes(element.id, video.id )"  matBadge="{{video.likesAmt }}" matBadgePosition="below">
+                  <mat-icon inline="true">favorite</mat-icon>
+              </button>  
+              </ng-container>   
+            </div>
+        
+        </ng-container>
+
         <ng-container *ngIf="openImageGallery && element.imageGallery.length > 0">
-          <div style="display: flex; flex-flow: row wrap; align-items: center;" *ngFor="let image of imageArray | slice:start:show; let i = index;">
-            <div>
-              <button style="font-size: xx-large; background-color: black;" [disabled]="start == 0" mat-button (click)="prev()">&#8678;</button>
+          <ng-container *ngIf="element.imageGallery.length > 1 ">
+            <mat-card-subtitle>
+              {{element.imageGallery.length}} Pictures
+            </mat-card-subtitle>
+          </ng-container>
+          <ng-container *ngIf="element.imageGallery.length == 1 ">
+            <mat-card-subtitle>
+              {{element.imageGallery.length}} Picture
+            </mat-card-subtitle>
+          </ng-container>
+          <div class="mat-elevation-z8 galleries" *ngFor="let image of imageArray | slice:start:show; let i = index;">
+            <mat-label>
+              {{image.title}}
+            </mat-label>
+            
+            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">
+                <div>
+                  <button style="font-size: xx-large; background-color: black;" [disabled]="start == 0" mat-button (swipe)="prev()" (click)="prev()">&#8678;</button>
+                </div>
+                <img style="height: 250px; width: 250px; border: white solid .1em;" [src]="image.path" alt="Image gallery">
+                <div>
+                  <button style="font-size: xx-large; background-color: black;" [disabled]="show == element.imageGallery.length" mat-button (swipe)="next()" (click)="next()">&#8680;</button>
+                </div>
+              </div>
+              <ng-container *ngIf="userId != element.creator && image.likes" >
+                <button [ngStyle]="{ 'background-color': image.likes.indexOf(username) > -1 ? 'green': 'rgb(128, 252, 128)' }"  mat-icon-button class="big" (click)="addLikes(element.id, image.id)"  [matBadge]="image.likesAmt" matBadgePosition="below">
+                  <mat-icon inline="true">favorite</mat-icon> 
+              </button>  
+              <!-- <button   *ngIf="image.likes.indexOf(username) > -1"  class="big" (click)="addLikes(element.id, image.id)">
+                Unlike                  
+              </button> -->
+              </ng-container>
+                
             </div>
-            <img style="height: 250px; width: 250px;" [src]="image" alt="media gallery">
-            <div>
-              <button style="font-size: xx-large; background-color: black;" [disabled]="show == element.imageGallery.length" mat-button (click)="next()">&#8680;</button>
-            </div>
-          </div>
-          <ng-container *ngIf="element.imageGallery.length > 1 "> {{element.imageGallery.length}} Pictures </ng-container>
-          <ng-container *ngIf="element.imageGallery.length == 1 "> {{element.imageGallery.length}} Picture </ng-container>
         </ng-container>
         <ng-container *ngIf="openImageGallery && element.imageGallery.length < 1">
-          No Media Uploaded
+          No Images Uploaded
+        </ng-container>
+        <ng-container *ngIf="openVideoGallery && element.videoGalleryength < 1">
+          No Videos Uploaded
         </ng-container>
       </div>
     </td>
@@ -86,13 +180,11 @@
 <tr class="mat-row" *matNoDataRow>
   <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
 </tr>
-</table>
-<div> 
+</table> 
   <mat-paginator style="width: 100%;" [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons 
       aria-label="Select page of profiles">
     </mat-paginator>
-</div>
 </mat-card-content>
 
 </mat-card>

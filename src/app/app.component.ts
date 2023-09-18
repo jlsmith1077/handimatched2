@@ -8,6 +8,8 @@ import { Profile } from './profile.model';
 import { User } from './authentication/user.model';
 import { AuthService } from './authentication/auth.service';
 import { ProfileService } from './profile.service';
+import { MailService } from './message/mail.service';
+import { Mail } from './message/mail.model';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +21,10 @@ export class AppComponent implements OnInit {
   mode: string = 'create';
   user: any = User;
   profile: any = Profile;
+  newMail: Mail[] = [];
   private authListenerSubs: Subscription = new Subscription;
   private userMode: Subscription = new Subscription;
+  private mailSub: Subscription = new Subscription;
   title = 'handimatched2';isLoading: Boolean = false;
   userIsAuthenticated = false;
   logOut: boolean = true;
@@ -39,6 +43,7 @@ export class AppComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private authService: AuthService,
               private profileService: ProfileService,
+              private mailService: MailService,
               private changeDetectorRef: ChangeDetectorRef,
               private media: MediaMatcher,
               private breakpointObserver: BreakpointObserver,
@@ -50,6 +55,12 @@ export class AppComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
+    this.mailSub = this.mailService.getNewMailListener().subscribe(newMail => {
+      this.newMail = newMail
+      console.log('new mail', this.newMail)
+    });
+
     if(this.logOut) {
       this.authService.autoAuthUser();
     }
@@ -60,7 +71,7 @@ export class AppComponent implements OnInit {
     this.userMode = this.authService.getUserStatusListener().subscribe(responseData => {
         this.mode = responseData.mode;
         this.profile = responseData.profile;
-        this.user = responseData.profile; 
+        this.user = responseData.profile;
     }); 
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
@@ -71,20 +82,9 @@ export class AppComponent implements OnInit {
         document.getElementById(fragment)!.scrollIntoView({ behavior: "smooth" });
       }
     });
-//   this.mailservice.getMails();
-//   this.mailSub = this.mailservice.getMailUpdateListener().subscribe((mailData: Mail[]) => {
-//       this.mails = mailData;
-//       const newMail = this.mails.filter(mail => mail.opened === 'false');
-//       this.userOpenMailLength = newMail.length;
-//   });
-//   this.mailSub2 = this.mailservice.getIsOpenListner().subscribe(bool => {
-//     this.isOpen = bool;
-//   });
-  
-//   this.openStateSub = this.mailservice.getOpenedStateUpdateListener()
-//   .subscribe((resData: string[]) => {
-//     this.userOpenMail = resData;
-// });
+    this.mailSub = this.mailService.getMailUpdateListener().subscribe(mail => {
+      console.log('got mail in app compnt')
+    })
   }
   ngAfterInit() {
     this.breakpointObserver.observe(['(max-width: 600px)']).subscribe((res) => {

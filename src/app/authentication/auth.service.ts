@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
+import {SocialAuthService } from '@abacritt/angularx-social-login'
 import { AuthData } from './auth-data.model';
 import { User } from './user.model';
 import { environment } from '../../environments/environment';
@@ -14,6 +15,7 @@ const backendURL2 = environment.apiURL + "/profile/";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  socialUser!: SocialUser;
   user = new Subject<{profile:any, mode: string}>();
   private profile: Profile[] = [];
   private isAuthenticated = false;
@@ -29,6 +31,7 @@ export class AuthService {
   // user = new Subject<User>();
 
   constructor(private http: HttpClient,
+    private socialAuthService: SocialAuthService,
     private router: Router
     ) {
     }
@@ -64,7 +67,8 @@ export class AuthService {
   createUser(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
     this.http
-      .post<{ token: string; expiresIn: number, message: string, user: AuthData, userId: string}>(backendURL + '/signup', authData)
+      .post<{ token: string; expiresIn: number, message: string, user: AuthData, userId: string}>
+      (backendURL + '/signup', authData)
       .subscribe((response) => {
         this.userId = response.userId;
         this.creator = response.userId;
@@ -78,7 +82,7 @@ export class AuthService {
         const now = new Date();
         const expirationDate = new Date(now.getTime() + response.expiresIn * 18000);
         this.saveAuthData(response.token, expirationDate, response.userId);
-        console.log('save auth data', response.token, expirationDate, response.userId)  
+        this.token = response.token;  
         this.router.navigate(['/']);
       }, error => {
         this.authStatusListener.next(false);
@@ -94,14 +98,12 @@ export class AuthService {
         authData
       ).
       subscribe(response => {
-        console.log('response', response.userId)
         if(response.user) {
           sessionStorage.setItem('user', JSON.stringify(response.user));
           const profile_id = response.user._id;
           const token = response.token;
           if (token) {
               this.token = token;
-              console.log('Got Token Sign In')
               sessionStorage.setItem('profile_id', profile_id);
               this.userId = response.userId;
               this.creator = response.userId;
@@ -116,13 +118,11 @@ export class AuthService {
               this.user.next({profile: response.user, mode: this.mode});
               const now = new Date();
               const expirationDate = new Date(now.getTime() + expiresInDuration * 18000);
-              console.log(expirationDate);
               this.saveAuthData(token, expirationDate, this.userId);
               localStorage.setItem('email', authData.email.toLowerCase());
               this.router.navigate(['/profiles']);
           }
         } else {
-            console.log('Sign In')
             const token = response.token;
             this.token = token
             if (token) {
@@ -135,7 +135,6 @@ export class AuthService {
             sessionStorage.setItem('creator', this.creator);
             this.authStatusListener.next(true);
             if(response.username) {
-              console.log('Sign In')
               this.user.next({profile: response.user, mode: this.mode});
               this.mode = 'edit';
             } else {
@@ -144,7 +143,6 @@ export class AuthService {
             }
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresInDuration * 18000);
-            console.log(expirationDate);
             this.saveAuthData(token, expirationDate, this.userId);
             localStorage.setItem('email', authData.email.toLowerCase());
             const email = localStorage.getItem('email');
@@ -229,6 +227,10 @@ export class AuthService {
   }
 
   logout() {
+    const id = sessionStorage.getItem('userId') as string;
+    console.log('id', id)
+    const data = {id};
+    this.http.patch<{message: string}>(backendURL, data).subscribe(res => console.log(res.message))
     this.token = null!;
     this.isAuthenticated = false;
     this.userId = null!;
@@ -246,6 +248,7 @@ export class AuthService {
       mode: 'create',
       profile: {}
     });
+    this.socialAuthService.signOut();
     this.router.navigate(['/profiles']);
     this.authStatusListener.next(false);
     }

@@ -12,9 +12,10 @@ export class Profile {
     public fullname: string;
     public creator: string;
     public friends: [];
-    public friendsAmt: number;
     public imageGallery: ImageGallery[];
     public videoGallery: VideoGallery[];
+    public online?: string;
+    public friendsAmt?: number;
 
     constructor(fullname: string,
                 location: string,
@@ -26,9 +27,10 @@ export class Profile {
                 id: string,
                 creator: string,
                 friends: [],
-                friendsAmt: number,
                 imageGallery: ImageGallery[],
-                videoGallery: VideoGallery[]
+                videoGallery: VideoGallery[],
+                online?: string,
+                friendsAmt?: number
                 ) {
         this.fullname = fullname;
         this.imagePath = imagePath;
@@ -40,8 +42,9 @@ export class Profile {
         this.id = id;
         this.creator = creator;
         this.friends = friends;
-        this.friendsAmt = friendsAmt;
         this.imageGallery = imageGallery;
         this.videoGallery = videoGallery;
+        this.online = online;
+        this.friendsAmt = friendsAmt;
     }
 }

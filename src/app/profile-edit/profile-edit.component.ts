@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { SwipeDirective } from '../swipe.directive';
 
 import { AuthService } from '../authentication/auth.service';
 // import { mimeType } from '../';
@@ -18,7 +19,7 @@ export class ProfileEditComponent implements OnInit {
   isLoading = false;
   mode = 'create';
   editMode = false;
-  profile: any = Profile;
+  profile: any;
   profiles: Profile[] = [];
   profileForm!: FormGroup;
   imagePreview: string = '';
@@ -52,8 +53,20 @@ constructor(
     this.email = localStorage.getItem('email')!
     this.profile = JSON.parse(sessionStorage.getItem('user')!)
     this.profileEditUpdate = this.profileService.getProfileEditListener().
-      subscribe(profile => {
-        this.profile = profile;       
+      subscribe(returnedProfile => {
+        const profile = {
+          username: returnedProfile.username,
+          email: returnedProfile.email,
+          imagePath: returnedProfile.imagePath,
+          location: returnedProfile.location,
+          interest: returnedProfile.interest,
+          gender: returnedProfile.gender,
+          fullname: returnedProfile.fullname
+        }
+        console.log('got profile', profile)
+        this.profile = profile;
+        this.mode = 'edit';
+        this.profileForm.patchValue(profile)     
       });
     this.profileForm = new FormGroup({
       'username': new FormControl(null, {
@@ -78,7 +91,6 @@ constructor(
         this.mode === 'edit';
         this.profileId = paramMap.get('id')!;
         this.profile = this.profileService.getProfile2(this.profileId)
-        console.log('mode', this.mode, 'imagepath profile edit and profile after getProfile()', this.profile.imagePath, '--', this.profile)
         this.imagePreview = this.profile.imagePath;
         this.profileForm!.setValue({ 
           username: this.username,
@@ -96,9 +108,9 @@ constructor(
     });
     // this.image = this.profile!.imagePath
     // console.log('imagepath', this.profile!.imagePath)
-    console.log('mode', this.mode)
   }
   onSubmit() {
+    console.log('profile uploads', this.profile?.imageGallery)
     sessionStorage.setItem('userId', this.profileId!);
     if (this.profileForm.invalid) {
         return;
@@ -117,9 +129,8 @@ constructor(
         this.profileForm.value.gender, this.profileForm.value.interest,
         this.profileForm.value.imagePath
         );
-        this.profileForm.reset();
-        this.router.navigate(['/']);
       }
+      alert('Profile Saved')
   }
   onCancel() {
     this.router.navigate(['/']);

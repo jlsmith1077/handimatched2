@@ -28,6 +28,19 @@ router.put("/social",
   
 );
 
+
+router.patch("",
+  checkAuth,
+  profileControllers.logOut
+  
+);
+// router.patch("",
+//   checkAuth,
+//   fileExtract,
+//   profileControllers.changeProfilePic
+  
+// );
+
 router.get("", profileControllers.profileGet);
 router.get("/:id", profileControllers.getProfileEdit);
 

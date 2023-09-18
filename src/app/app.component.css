@@ -24,6 +24,8 @@ span {
 }
 mat-sidenav-content {
     width: 100%;
+    min-height: 100vh;
+    flex-grow: 1;
 }
 mat-sidenav-container{
     width: 100%;
@@ -31,18 +33,17 @@ mat-sidenav-container{
     padding: .1em;
     border: 0em;
     margin: 0em !important;
-    background-color: whitesmoke;
+    background-color: black;
 }
 
 mat-sidenav-content, .mat-drawer-content {
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
-    justify-content: space-evenly;
     border: 0em;
     margin: 0em;
     padding: 0em;
-    background-color: whitesmoke;
+    background-color: black;
 }
 .mat-icon {
     font-size: x-large;

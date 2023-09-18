@@ -1,9 +1,14 @@
-<mat-card class="backdrop">
-    <mat-card-subtitle><mat-icon>time</mat-icon> {{currentDateAndTime}}</mat-card-subtitle>
-    <mat-card-content>
-  <form [formGroup]="form" (submit)="onCreateMail()"> 
-        <mat-form-field>
-        <textarea
+<mat-card>
+  <mat-card-title>
+    Send a Message 
+     to <p style="padding-top: 1em; font-style: italic; font-weight: bold;">{{receivername}}</p>
+  </mat-card-title>
+  <!-- <mat-card-subtitle><mat-icon>time</mat-icon> {{currentDateAndTime}}</mat-card-subtitle> -->
+  <mat-card-content class="content">
+  <form [formGroup]="form"> 
+    <mat-form-field>
+      <textarea
+          style="color: black; font-size: x-large;padding: 0em; border-bottom: .1em solid black;"
           matInput
           rows="4"
           id="content"
@@ -11,25 +16,56 @@
           placeholder="Type Message Here"
         >
       </textarea>
-        </mat-form-field>
-      <button style="color: black;"
-        color="accent"
-        mat-raised-button
-        type="submit"
-      >
-        Send this Message
-      </button>
-      
-    </form>
-    <hr>
-      <button
+    </mat-form-field>
+        <mat-label>Add File</mat-label>
+            <!-- <button mat-raised-button type="button" (click)="imagePicker.click()">Choose a File</button>
+            <input type="file" #imagePicker (change)="onImagePicked($event)" multiple> -->
+          <!-- <mat-error *ngIf="form.get('image').invalid">Please choose a file for your post.</mat-error> -->
+        <!-- <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image')?.valid"> -->
+        <div formArrayName="image">
+          <img
+              *ngFor="let image of images ; let i = index;"
+              [src]="image" height="100px"
+            >
+            <input type="file" multiple (change)="onImagePicked($event)">
+        </div>
+          <!-- <div formArrayName="image" *ngFor="let image of images.controls; let i = index">
+            <div >
+              <img 
+                [src]="image" 
+                [alt]="form.value.username" 
+                *ngIf="format === 'image'"
+              >
+            </div>
+            <button (click)="removeImage(i)">Remove</button>
+          </div> -->
+            <video 
+              [src]="imagePreview" 
+              controls *ngIf="format === 'video'" >
+            </video>
+        
+      </form>
+      <mat-action-row>
+        <button 
+          (click)="onCreateMail()"
+          style="color: black;"
+          color="accent"
           mat-raised-button
-          color="warn"
           type="button"
-          (click)="onCancel()"
-          >
-          cancel
-      </button> 
+        >
+          Send this Message
+        </button>
+        <!-- <button
+            mat-raised-button
+            color="warn"
+            type="button"
+            (click)="onCancel()"
+            >
+            cancel
+        </button>  -->
+      </mat-action-row>
+    <hr>
+      
     <mat-card-subtitle *ngIf="openMail === true">My Messages</mat-card-subtitle>
   </mat-card-content>
   </mat-card>

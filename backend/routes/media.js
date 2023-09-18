@@ -4,22 +4,20 @@ const mediaControllers = require("../controllers/media");
 const router = express.Router();
 const fileExtract = require("../middleware/file");
 
-// router.patch(
-//     "",
-//     checkAuth,
-//     profileControllers.changeProfilePic
-// );
-router.put(
-    "",
-    checkAuth,
-    fileExtract,
-    mediaControllers.profileAddMedia
-);
 
-router.patch("",
-  checkAuth,
-  fileExtract,
-  mediaControllers.changeProfilePic
+router.put("",
+// checkAuth,
+fileExtract,
+mediaControllers.changeProfilePic
 );
+router.patch("",
+// checkAuth,
+fileExtract,
+mediaControllers.profileAddMedia
+);
+// router.delete("",
+// // checkAuth,
+// mediaControllers.deleteMediaFromArray
+// );
 
 module.exports = router;

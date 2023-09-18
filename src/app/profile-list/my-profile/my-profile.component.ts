@@ -28,6 +28,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   @Input() profile: Profile | undefined;
   @Input() index: number | undefined;
   isLoading = false;
+  private authProfile: Subscription = new Subscription;
   private imageUpdated: Subscription = new Subscription;
   private subProfile: Subscription = new Subscription;
   private postsSub: Subscription = new Subscription;
@@ -41,49 +42,58 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   constructor(private profileService: ProfileService, private authService: AuthService) {}
 
   ngOnInit() {
-        this.subProfile =this.profileService.getProfileEditListener().subscribe((profile) => {
+    this.imageForm = new FormGroup({
+     'imagePath': new FormControl(null, {
+       validators: [Validators.required]
+     })
+    });
+        this.subProfile = this.profileService.getProfileEditListener().subscribe((profile) => {
+          console.log('in subProfile my profile cmpnt');
         this.user = profile;
         if(profile.imagePath) {
           this.userPic = profile.imagePath;
+          console.log('this user pic', this.userPic)
           sessionStorage.setItem('userPic', this.user.imagePath);
         }
             sessionStorage.setItem('location', profile.location);
             sessionStorage.setItem('username', profile.username);
        })
-       this.imageForm = new FormGroup({
-        'imagePath': new FormControl(null, {
-          validators: [Validators.required]
-        })
-       });
        this.email = localStorage.getItem('email') as string;
-       const user = this.profileService.getProfilebyEmail(this.email);
        this.userPosts.next(true);
        this.isLoading = true;
        this.imageUpdated = this.profileService.getPictureUpdateListener().
-       subscribe(imagePath => this.userPic = imagePath);
+       subscribe(imagePath => {
+        this.userPic = imagePath
+        console.log('user in picture update', this.userPic
+        )
+       });
       //  this.user = JSON.parse(sessionStorage.getItem('user'));
-      this.subProfile = this.authService.getUserStatusListener().subscribe(profileData => {
-        this.profileService.getProfiles();
-          this.user = profileData.profile;
-          if(!profileData.profile || !profileData.profile && !this.userPic) {
-              this.userLocation = 'Please Update your Profile';
-              this.userName = 'John Doe';               
-            } else {
-              this.userName = profileData.profile.username;
-              localStorage.setItem('username', this.userName!);
-              localStorage.setItem('location', profileData.profile.location);
-              this.userLocation = profileData.profile.location;
-              this.userPic = profileData.profile.imagePath;
-          if(this.userPic != profileData.profile.imagePath) {
-            this.userPic = this.user.imagePath
+      this.authProfile = this.authService.getUserStatusListener().subscribe(profileData => {
+        console.log('in authPRofile my profile cmpnt');
+          if(this.user) {
+            return
           } else {
-            sessionStorage.setItem('location', profileData.profile.location);
-            sessionStorage.setItem('userPic', this.user.imagePath);
-            sessionStorage.setItem('username', profileData.profile.username);
-            sessionStorage.setItem('profileId', this.user.id);
+            this.user = profileData.profile;
+            if(!profileData.profile || !profileData.profile && !this.userPic) {
+                this.userLocation = 'Please Update your Profile';
+                this.userName = 'John Doe';               
+              } else {
+                this.userName = profileData.profile.username;
+                localStorage.setItem('username', this.userName!);
+                localStorage.setItem('location', profileData.profile.location);
+                this.userLocation = profileData.profile.location;
+                this.userPic = profileData.profile.imagePath;
+                  if(this.userPic != profileData.profile.imagePath) {
+                    this.userPic = this.user.imagePath
+                  } else {
+                    sessionStorage.setItem('location', profileData.profile.location);
+                    sessionStorage.setItem('userPic', this.user.imagePath);
+                    sessionStorage.setItem('username', profileData.profile.username);
+                    sessionStorage.setItem('profileId', this.user.id);
+                  }
+              }
           }
-        }
-      });
+        });
 }
 changeProfilePic() {
   const imagePath = this.imageForm.value.imagePath
@@ -121,6 +131,7 @@ getWeather() {
 ngOnDestroy() {
   this.imageUpdated.unsubscribe();
   this.subProfile.unsubscribe();
+  this.authProfile.unsubscribe();
   sessionStorage.removeItem('username');
   sessionStorage.removeItem('creator');
   sessionStorage.removeItem('userId');

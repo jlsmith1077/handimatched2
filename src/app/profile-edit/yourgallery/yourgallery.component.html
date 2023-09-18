@@ -1,0 +1,38 @@
+<mat-card>
+    <mat-card-title class="yourGallery mat-elevation-z8"> Your Gallery</mat-card-title>
+    <div class="gallery_container">
+        <ng-container *ngIf="imageArray.length > 0">
+        <mat-label style="text-align: center; width: 100%;"  class="mat-elevation-z8">Images</mat-label>
+                <div style="display: flex; flex-flow: row wrap; justify-content: flex-start;  gap: 1em;">
+                    <div style="display: flex; flex-flow: column wrap; justify-content: center; align-items: center;" *ngFor="let image of imageArray">
+                        <mat-card-subtitle >
+                            {{image.title}}
+                        </mat-card-subtitle>
+                        <img class="displayedGallery mat-eleveation-z8" src="{{image.path}}">
+                        <mat-label class="likes">Likes {{image.likeAmt}}</mat-label>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="videoArray.length > 0" >
+                <mat-label style="text-align: center; margin-top: 1em; width: 100%;" class="mat-elevation-z8">Videos</mat-label>
+                <div style="display: flex; flex-flow: row wrap; align-items: flex-start; margin-bottom: 1em; gap: 1em;">
+                    <div style="display: flex; flex-flow: column wrap; justify-content: center; align-items: center;" *ngFor="let video of videoArray">
+                        <mat-card-subtitle>
+                            {{video.title}}
+                        </mat-card-subtitle>
+                        <video
+                            class="displayedGallery mat-eleveation-z8"
+                            controls
+                            playsInline     
+                            >
+                            <source src="{{video.path}}">
+                        </video>
+                        <mat-label class="likes"> Likes {{video.likeAmt}}</mat-label>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="imageArray.length < 1 && videoArray.length < 1">
+                No images or videos uploaded to your gallery
+            </ng-container>
+    </div>
+</mat-card>

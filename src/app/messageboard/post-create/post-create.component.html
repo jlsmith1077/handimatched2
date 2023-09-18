@@ -42,7 +42,7 @@
           <mat-error *ngIf="form.get('messagepost')?.invalid">Please enter a post content.</mat-error>
         </mat-form-field>
         <mat-label>Add File</mat-label>
-            <button mat-stroked-button type="button" (click)="imagePicker.click()" color="primary">Choose a File</button>
+            <button mat-raised-button type="button" (click)="imagePicker.click()">Choose a File</button>
             <input type="file" #imagePicker (change)="onImagePicked($event)">
           <!-- <mat-error *ngIf="form.get('image').invalid">Please choose a file for your post.</mat-error> -->
         <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image')?.valid">
@@ -56,7 +56,6 @@
             </video>
         </div>
         <button
-          color="primary"
           mat-raised-button
           type="submit">Save Post</button>
       </form>

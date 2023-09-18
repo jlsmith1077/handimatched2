@@ -1,16 +1,16 @@
 <mat-card>
-        <mat-card-content *ngIf="userPic">
+        <mat-card-content>
             <img class="mat-elevation-z8" mat-card-img alt="Profile Image" src="{{userPic}}" (error)="setDefaultPic()">
         </mat-card-content>
         
         <button *ngIf="userPic != '../../../assets/images/default_pic.jpg' " color="primary" mat-stroked-button type="button" (click)="imagePicker.click()">Edit Profile Pic</button>
         <input class="image" type="file" #imagePicker (change)="onImagePicked($event)">
-        <div style="max-width: 100%;" class="image-preview" *ngIf="imagePreview !== '' && imagePreview && imageForm.get('imagePath')!.valid">
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && imageForm.get('imagePath')!.valid">
             <img mat-card-img [src]="imagePreview" alt="Profile Image">
             <!-- <video *ngIf="format==='video' && url" height="200" controls [src]="imagePreview" [alt]="profileForm.value.username"></video> -->
         </div>
-        <ng-container style="max-width: 100%;" *ngIf="showAddPicButton">
-            <button style="max-width: 100%;" mat-button color="primary" (click)="changeProfilePic()">Change to this Pic</button>
+        <ng-container *ngIf="showAddPicButton">
+            <button mat-button color="primary" (click)="changeProfilePic()">Change to this Pic</button>
         </ng-container>
     
     <!-- <mat-card-footer *ngIf="userLocation">

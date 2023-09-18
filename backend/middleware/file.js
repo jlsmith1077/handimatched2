@@ -12,8 +12,11 @@ const MIME_TYPE_MAP = {
     "video/webm": "webm"
     
   };
-  
   const storage = multer.diskStorage({
+    // fileFilter(req, file, cb) {
+    //   if(!file.originalname.match(/\.(jpg|png|jpeg|3gp|mov|mp4|wmv|webm)$/))
+    //   return cb(new Error('Not a valid file to be uploaded') )
+    // },
     destination: (req, file, cb) => {
       const isValid = MIME_TYPE_MAP[file.mimetype];
       let error = new Error("Invalid mime type");

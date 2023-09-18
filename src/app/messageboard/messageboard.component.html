@@ -1,39 +1,39 @@
 <mat-card>
-  <mat-toolbar>
-        <mat-card-title class="mat-elevation-z8">
-          Create A New Post Or Interact with Other Posts
-        </mat-card-title>
+  <mat-card-title class="mat-elevation-z8">
+    Create A New Post Or Interact with Other Posts
+  </mat-card-title>
+  <mat-card-header>
         <div class="separate">        
         <mat-form-field appearance="standard">
         <mat-label style="font-style: oblique; font-weight: 300;">Filter Posts</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-      </mat-form-field>
-      <div style="margin-top: 2em">
+        </mat-form-field>
+        <div style="margin-top: 2em; margin-left: 1em; display: flex; flex-flow: row wrap; max-width: 100%">
         <button class="createPostButton" color="primary" mat-raised-button [matMenuTriggerFor]="type">Sections</button>
-        <mat-menu #type="matMenu">
-          <button mat-menu-item [matMenuTriggerFor]="forums">Forums</button>
-          <button mat-menu-item [matMenuTriggerFor]="ads">Ads</button>
-        </mat-menu>
-        <mat-menu #forums="matMenu">
-          <button mat-menu-item (click)="sortData('All')">All</button>
-          <button mat-menu-item (click)="sortData('vent')">Let off some steam</button>
-          <button mat-menu-item (click)="sortData('events')">events</button>
-          <button mat-menu-item (click)="sortData('discussions')">discussions</button>
-        </mat-menu>
-        <mat-menu #ads="matMenu">
-          <button mat-menu-item (click)="sortData('women for men')">women for men</button>
-          <button mat-menu-item (click)="sortData('men for women')">men for women</button>
-          <button mat-menu-item (click)="sortData('women for women')">women for women</button>
-          <button mat-menu-item (click)="sortData('men for men')">men for men</button>
-        </mat-menu>
+          <mat-menu #type="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="forums">Forums</button>
+            <button mat-menu-item [matMenuTriggerFor]="ads">Ads</button>
+          </mat-menu>
+          <mat-menu #forums="matMenu">
+            <button mat-menu-item (click)="sortData('All')">All</button>
+            <button mat-menu-item (click)="sortData('vent')">Let off some steam</button>
+            <button mat-menu-item (click)="sortData('events')">events</button>
+            <button mat-menu-item (click)="sortData('discussions')">discussions</button>
+          </mat-menu>
+          <mat-menu #ads="matMenu">
+            <button mat-menu-item (click)="sortData('women for men')">women for men</button>
+            <button mat-menu-item (click)="sortData('men for women')">men for women</button>
+            <button mat-menu-item (click)="sortData('women for women')">women for women</button>
+            <button mat-menu-item (click)="sortData('men for men')">men for men</button>
+          </mat-menu>
         <span></span>
-        <a routerLink="/create" class="createPostButton" mat-raised-button color="primary" style="float: right">
+        <a routerLink="/create" class="createPostButton" mat-raised-button color="primary">
             Create Post
           </a>
         </div>
       </div>
       <span style="flex: 1 1 auto"></span>
-    </mat-toolbar>
+    </mat-card-header>
     <mat-card-content >
       <mat-paginator [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons 
@@ -43,11 +43,19 @@
         <div class="container">
       <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
         <ng-container *ngIf="column == 'imagePath'">
-          <th style="padding: 0em !important;" mat-header-cell *matHeaderCellDef >User's Pic </th>
+          <th style="padding: 0em !important; color: blue; padding-left: 1em !important;" mat-header-cell *matHeaderCellDef >PIC</th>
           <td style="padding: 0em !important;" mat-cell *matCellDef="let element"> <img style="height: 100px; width: 100px;" mat-card-img src="{{element[column]}}"> </td>
         </ng-container>
-        <ng-container *ngIf="column != 'imagePath' || 'title'">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column | uppercase }} </th>
+        <ng-container *ngIf="column == 'username'">
+          <th style="padding: 0em !important; color: blue; text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header>USER</th>
+          <td mat-cell *matCellDef="let element"> {{element[column] | titlecase }} </td>
+        </ng-container>
+        <ng-container *ngIf="column == 'location'">
+          <th style="padding: 0em !important; color: blue; text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header>AREA</th>
+          <td mat-cell *matCellDef="let element"> {{element[column] | titlecase }} </td>
+        </ng-container>
+        <ng-container *ngIf="column == 'title'">
+          <th style="padding: 0em !important; color: blue; text-align: center;" mat-header-cell *matHeaderCellDef mat-sort-header> {{column | uppercase }} </th>
           <td mat-cell *matCellDef="let element"> {{element[column] | titlecase }} </td>
         </ng-container>
       </ng-container>
@@ -67,39 +75,37 @@
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
            <div class="example-element-symbol"> {{element.title}}</div>
-           <div class="example-element-symbol imgPost"> <img [alt]="element.username" mat-card-img src="{{element.imagePath}}"> </div>
            <div class="example-element-diagram">
                <!-- <div *ngIf="element.imagePath" class="example-element-position"> <img src="{{element.imagePath}}"> </div> -->
-               <div class="example-element-symbol"> {{element.messagepost}} </div>
+               <div class="messagepost mat-elevation-z8"> {{element.messagepost}} </div>
                <div class="example-element-symbol"> {{element.comments.comment}} </div>
-            </div>
-            <div class="example-element-description">
-        </div>
+          </div>
+           <div class="example-element-symbol imgPost"> <img [alt]="element.username" mat-card-img src="{{element.imagePath}}"> </div>
           <app-comments-list *ngIf="listOn === true" [comments]="element.comments">
           </app-comments-list>
           <app-comments style="text-align: center;" *ngIf="mode === 'comment'" (commentOff)="onCloseComment()"></app-comments>
         <mat-action-row>      
-          <button mat-stroked-button (click)="onComment(element.id, element.username)">Make a Comment</button>
-          <p *ngIf="usernameError === true"><strong>You can not comment on your own post</strong></p>
+          <button mat-stroked-button  style="padding-left: 1em; padding-right: 1em;" (click)="onComment(element.id, element.username)">Make a Comment</button>
+          <p *ngIf="usernameError === true"><strong style="color: red;">You can not comment on your own post</strong></p>
           <ng-container *ngIf="listOn === false">
-            <button style="width: auto !important; height: auto !important;" (click)="getComments()" mat-stroked-button  matBadge="{{element.comments.length}}" matBadgePosition="after" matBadgeColor="accent">
+            <button style="width: auto !important; height: auto !important;padding-left: 1em; padding-right: 1em;" (click)="getComments()" mat-stroked-button  matBadge="{{element.comments.length}}" matBadgePosition="after" matBadgeColor="accent">
               See Comments
             </button>
           </ng-container>
           <ng-container *ngIf="listOn === true">
-            <button mat-stroked-button (click)="closeComments()">
+            <button mat-stroked-button style="padding-left: 1em; padding-right: 1em;" (click)="closeComments()">
                Close Comments
             </button>
           </ng-container>
           <ng-container  *ngIf="listOn === false">
-            <button mat-stroked-button>
+            <button mat-stroked-button  style="padding-left: 1em; padding-right: 1em;">
               <!-- <mat-icon matBadge="{{commentsLength}}" matBadgePosition="before" matBadgeColor="accent">message</mat-icon> -->
               Send Message
             </button>
           </ng-container>
           <div>
             <ng-container  *ngIf="userIsAuthenticated && comments.length < 0">
-              <button mat-stroked-button (click)="onComment(element.id, element.username)">
+              <button mat-stroked-button style="padding-left: 1em; padding-right: 1em;" (click)="onComment(element.id, element.username)">
                 Make a Comment
               </button>
             </ng-container>

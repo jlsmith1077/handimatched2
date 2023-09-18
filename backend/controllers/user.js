@@ -5,6 +5,10 @@ const Socialuser = require('../models/socialuser');
 const Profile = require('../models/profile');
 const CreateProfile = require('../controllers/profile')
 
+const login = (id) => {
+    Profile.updateOne({creator: id}, {$set: {online: false}})
+}
+
 exports.userSignup = (req, res, next) => {
     let fetchedProfile;
     bcrypt.hash(req.body.password, 10)
@@ -39,8 +43,51 @@ exports.userSignup = (req, res, next) => {
     });
 }
 
+ exports.logOut = (req, res, next) => {
+    Profile.updateOne({creator: req.body.id}, {$set: {online: 'false'}})
+    .then(result => {
+         if(result.matchedCount < 1) {
+            return res.status(201).json({
+                message:'Logged Out!'
+            })
+         }
+        if (result.modifiedCount > 0) {
+            res.status(200).json({ 
+                message: 'Logged Out!'
+                                    });  
+            } else {
+                res.status(401).json({
+                    message: 'Not authorized'
+                });
+            }
+     }).catch(error => {
+            res.status(500).json({
+            message: 'Was not able to logout'
+            })
+        });
+    }
+
+
+// exports.logout = (req, res, next) => {
+//     console.log('id in log out', req.userId);
+//     Profile.updateOne({creator: req.body.id}, {$set: {online: false}})
+//     .then(result => {
+//         if (result.modifiedCount > 0) {
+//         res.status(200).json({ 
+//             message: 'Logged Out!'
+//                                 });  
+//         } else {
+//             res.status(401).json({
+//                 message: 'Not authorized'
+//             });
+//             }
+//      }).catch(error => {
+//             res.status(500).json({
+//             message: 'Was not able to logout'
+//             })
+//         });
+//     }
 exports.userSignin = (req, res, next) => {
-    console.log('signing in :)');
     let fetchedProfile;
     let fetchedUser;
     User.findOne({ email: req.body.email }).collation({locale: 'en_US', strength:1})
@@ -61,7 +108,6 @@ exports.userSignin = (req, res, next) => {
             Profile.findOne({ email: req.body.email }).collation({locale: 'en_US', strength:1})
             .then(resProfile => {
                 if (!resProfile) {
-                    console.log('token 1', fetchedUser.email, fetchedUser._id)
                     const token = jwt.sign(
                         { email: fetchedUser.email,
                             userId: fetchedUser._id    
@@ -76,8 +122,15 @@ exports.userSignin = (req, res, next) => {
                             username: fetchedUser.username
                         });
                     } else {
-                        fetchedProfile = resProfile;                    
-                        console.log('token 2', fetchedProfile.email, fetchedProfile._id)
+                        Profile.updateOne({creator: fetchedUser._id}, {$set: {online: "true"}})
+                        .then(result => {
+                            if (result.modifiedCount > 0) {
+                            } else {                                }
+                        })
+                      .catch(error => {
+                       console.log('error' + error)
+                      });
+                        fetchedProfile = resProfile;
                         const token = jwt.sign(
                             { email: fetchedUser.email,
                                 userId: fetchedUser._id    
@@ -193,5 +246,23 @@ exports.socialSignin = (req, res, next) => {
             message: 'Invalid E-mail or Password'
         });
     });
+
+exports.logout = (req, res, next) => {
+    console.log('hey')
+    // Profile.updateOne({creator: req.body.id}, {$set: {online: false}})
+    // .then(result => {
+    //     if (result.modifiedCount > 0) {
+    //     res.status(200).json({ message: 'Update successful!'
+    //                             });  
+    //     } else {
+    //         res.status(401).json({message: 'Not authorized'});
+    //         }
+    //  })
+    //     .catch(error => {
+    //         res.status(500).json({
+    //         message: 'Was not able to logout' + error
+    //         })
+    //     });
+    }
 
 }

@@ -1,63 +1,70 @@
-<div style="display: flex; flex-direction: column; height: 100vh;">
-<mat-toolbar>
-    <mat-toolbar-row>
-      <img src="../../assets/images/handimatched.jpg" class="mat-elevation" style="box-shadow: 1px 1px 5px rgba(0,0,0,0.5); height: 100%; padding: 0em; margin: 0em;">
-      <button  mat-icon-button  *ngIf="!sidenav.opened" (click)="sidenav.toggle()"><mat-icon style="font-size: x-large;" inline="true">menu</mat-icon></button>
-      <button mat-icon-button *ngIf="sidenav.opened" (click)="sidenav.toggle()"><mat-icon  style="color: red; font-size: x-large;" inline="true">close</mat-icon></button>
-      <span></span>
-      <button mat-icon-button (click)="removeDivider()"><mat-icon style="font-size: x-large;" inline="true" routerLink="/profiles">house</mat-icon></button>
-      <button *ngIf="userIsAuthenticated" mat-icon-button><mat-icon style="font-size: x-large;" inline="true" routerLink="/mail">message</mat-icon></button>
-      <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon style="font-size: x-large;" inline="true">forum</mat-icon></button>
-      <span></span>
-      <app-google-login *ngIf="!userIsAuthenticated"></app-google-login>
-      <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signin" routerLinkActive="mat-accent">Log in</button>
-      <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signup" routerLinkActive="mat-accent">Sign up</button>
-      <button *ngIf="userIsAuthenticated" mat-button routerLink="/profiles" routerLinkActive="warn" (click)="onLogout()" style="color: red; border-radius: .5em;">Log out</button>
-  </mat-toolbar-row>
-  </mat-toolbar>
-     <mat-sidenav-container style="flex-grow: 1;">
-       <mat-sidenav class="mat-elevation-z8" mode="side" #sidenav="matSidenav">
-        <div class="containMyprofile">
+<div style="display: flex; flex-direction: column; height: 100vh; max-width: 100%; align-items: flex-start;">
+  <mat-toolbar>
+      <mat-toolbar-row>
+        <img src="../../assets/images/handimatched.jpg" class="mat-elevation" style="box-shadow: 1px 1px 5px rgba(0,0,0,0.5); height: 100%; padding: 0em; margin: 0em;">
+        <button  mat-icon-button  *ngIf="!sidenav.opened" (click)="sidenav.toggle()"><mat-icon style="font-size: x-large;" inline="true">menu</mat-icon></button>
+        <button mat-icon-button *ngIf="sidenav.opened" (click)="sidenav.toggle()"><mat-icon  style="color: red; font-size: x-large;" inline="true">close</mat-icon></button>
+        <span></span>
+        <button mat-icon-button (click)="removeDivider()"><mat-icon style="font-size: x-large;" inline="true" routerLink="/profiles">house</mat-icon></button>
+        <button *ngIf="userIsAuthenticated" mat-icon-button><mat-icon style="font-size: x-large;" matBadge="{{newMail.length}}" matBadgeColor="accent" inline="true" routerLink="/messages">message</mat-icon></button>
+        <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon style="font-size: x-large;" inline="true">forum</mat-icon></button>
+        <span></span>
+        <app-google-login *ngIf="!userIsAuthenticated"></app-google-login>
+        <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signin" routerLinkActive="mat-accent">Log in</button>
+        <button *ngIf="!userIsAuthenticated" mat-stroked-button routerLink="/signup" routerLinkActive="mat-accent">Sign up</button>
+        <button *ngIf="userIsAuthenticated" mat-button routerLink="/profiles" routerLinkActive="warn" (click)="onLogout()" style="color: red; border-radius: .5em;">Log out</button>
+    </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container>
+      <mat-sidenav class="mat-elevation-z8" mode="side" #sidenav="matSidenav">
           <my-profile></my-profile>
-        </div>
-        <mat-nav-list *ngIf="isMobile < 1024" class="navlist-mobile">
-          <button  mat-icon-button routerLink="/profiles" routerLinkActive="primary" (click)="removeDivider()">
-            <mat-icon inline="true" >house</mat-icon>
-          </button>
-          <button mat-icon-button routerLink="/profiles" routerLinkActive="primary">
-            <mat-icon inline="true">message</mat-icon>
-          </button>
-          <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary">
-            <mat-icon inline="true">forum</mat-icon>
-          </button>
-          <button *ngIf="mode === 'create'" mat-icon-button routerLink="profiles/create1" routerLinkActive="primary">
-            <mat-icon inline="true">person_add</mat-icon>
-          </button>
-          <button *ngIf="mode === 'edit'" mat-icon-button [routerLink]="['profiles/edit/', profile?._id]" routerLinkActive="primary">
-            <mat-icon inline="true" >person_outline</mat-icon>
-          </button>
-          <button mat-icon-button routerLinkActive="primary" routerLink="/profiles">
-            <mat-icon inline="true">videocam</mat-icon>
-          </button>
-          <button mat-icon-button routerLinkActive="primary" routerLink="/profiles">
-            <mat-icon inline="true">add_a_photo</mat-icon>
-          </button>
-          <button mat-icon-button routerLinkActive="primary" routerLink="/profiles">
+          <mat-nav-list *ngIf="isMobile < 1024" class="navlist-mobile">
+            <button  mat-icon-button routerLink="/profiles" routerLinkActive="primary" (click)="removeDivider()">
+              <mat-icon inline="true" >house</mat-icon>
+            </button>
+            <button mat-icon-button routerLink="/messages" routerLinkActive="primary">
+              <mat-icon inline="true">message</mat-icon>
+            </button>
+            <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary">
+              <mat-icon inline="true">forum</mat-icon>
+            </button>
+            <button *ngIf="mode === 'create'" mat-icon-button routerLink="profiles/create1" routerLinkActive="primary">
+              <mat-icon inline="true">person_add</mat-icon>
+            </button>
+            <button *ngIf="mode === 'edit'" mat-icon-button [routerLink]="['profiles/edit/', profile?._id]" routerLinkActive="primary">
+              <mat-icon inline="true" >personal_video</mat-icon>
+            </button>
+            <button mat-icon-button routerLinkActive="primary" routerLink="/record">
+              <mat-icon inline="true">videocam</mat-icon>
+            </button>
+            <button mat-icon-button routerLinkActive="primary" routerLink="/videochat">
+              <mat-icon inline="true">voice_chat</mat-icon>
+            </button>
+            <button mat-icon-button routerLinkActive="primary" routerLink="/profiles">
+              <mat-icon inline="true">videocam</mat-icon>
+            </button>
+            <button mat-icon-button routerLinkActive="primary" routerLink="/profiles">
             <mat-icon inline="true">settings</mat-icon>
-          </button>
-      </mat-nav-list>
+            </button>
+        </mat-nav-list>
         <mat-nav-list *ngIf="isMobile >= 1024" class="navlist">
-          <button mat-icon-button routerLink="/profiles" routerLinkActive="primary" (click)="removeDivider()"><mat-icon style="font-size: x-large;">house</mat-icon>Home</button>
-          <button mat-icon-button routerLink="/app" routerLinkActive="primary"><mat-icon style="font-size: x-large !important;">message</mat-icon>Messages</button>
-          <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon style="font-size: x-large;">forum</mat-icon>View Posts</button>
-          <button mat-icon-button routerLink="/create" routerLinkActive="primary"><mat-icon style="font-size: x-large;">forum</mat-icon>Create Post</button>
-          <button *ngIf="mode === 'edit'"  mat-icon-button [routerLink]="['profiles/edit/', profile?._id]" routerLinkActive="primary"><mat-icon style="font-size: x-large;">person_outline</mat-icon>Update Profile</button>
-          <button *ngIf="mode ==='create'" mat-icon-button routerLink="profiles/create1" routerLinkActive="primary"><mat-icon style="font-size: x-large;">person_outline</mat-icon>Create Profile</button>
-          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">videocam</mat-icon>Record Video</button>
-          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">add_a_photo</mat-icon>Upload Video</button>
-          <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">settings</mat-icon>Settings</button>
-      </mat-nav-list>
-      
+            <button mat-icon-button routerLink="/profiles" routerLinkActive="primary" (click)="removeDivider()"><mat-icon style="font-size: x-large;">house</mat-icon>Home</button>
+            <button mat-icon-button routerLink="/messages" routerLinkActive="primary"><mat-icon style="font-size: x-large !important;">message</mat-icon>Messages</button>
+            <button mat-icon-button routerLink="/messageboard" routerLinkActive="primary"><mat-icon style="font-size: x-large;">forum</mat-icon>View Posts</button>
+            <button mat-icon-button routerLink="/create" routerLinkActive="primary"><mat-icon style="font-size: x-large;">forum</mat-icon>Create Post</button>
+            <button *ngIf="mode === 'edit'"  mat-icon-button [routerLink]="['profiles/edit/', profile?._id]" routerLinkActive="primary"><mat-icon style="font-size: x-large;">person_outline</mat-icon>Update Profile</button>
+            <button *ngIf="mode ==='create'" mat-icon-button routerLink="profiles/create1" routerLinkActive="primary"><mat-icon style="font-size: x-large;">person_outline</mat-icon>Create Profile</button>
+            <button mat-icon-button routerLinkActive="mat-accent" routerLink="/record"><mat-icon style="font-size: x-large;">personal_video</mat-icon>Record Video</button>
+            <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home">
+              <mat-icon style="font-size: x-large;">videocam</mat-icon>
+              Upload Video
+            </button>
+            <button mat-icon-button routerLinkActive="mat-accent" routerLink="/videochat">
+              <mat-icon style="font-size: x-large;">voice_chat</mat-icon>
+              Video Chat
+            </button>
+            <button mat-icon-button routerLinkActive="mat-accent" routerLink="/home"><mat-icon style="font-size: x-large;">settings</mat-icon>Settings</button>
+        </mat-nav-list>      
        </mat-sidenav>
        <mat-sidenav-content>
         <router-outlet class="profiles"></router-outlet>

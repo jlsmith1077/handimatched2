@@ -16,7 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -30,6 +30,7 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { ProfileListComponent } from './profile-list/profile-list.component';
 import { ProfileService } from './profile.service';
+import { RecordVideoService } from './profile-edit/media-folder/record-video/record-video.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorComponent } from './authentication/error/error.component';
 import { GoogleLoginComponent } from './authentication/google-login/google-login.component';
@@ -37,7 +38,6 @@ import { SigninComponent } from './authentication/signin/signin.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { SocialLoginModule, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { HomeComponent } from './home/home.component';
 import { GodaddyComponent } from './godaddy/godaddy.component';
 import { ProfileItemComponent } from './profile-list/profile-item/profile-item.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
@@ -45,15 +45,16 @@ import { LikeComponent } from './like/like.component';
 import { MessageboardComponent } from './messageboard/messageboard.component';
 import { CommentsComponent } from './messageboard/comments/comments.component';
 import { CommentsListComponent } from './messageboard/comments/comments-list/comments-list.component';
-import { PaginatorProfilesComponent } from './profile-list/paginator-profiles/paginator-profiles.component';
 import { MyProfileComponent } from './profile-list/my-profile/my-profile.component';
 import { MessageComponent } from './message/message.component';
 import { PostCreateComponent } from './messageboard/post-create/post-create.component';
 import { SettingsComponent } from './settings/settings.component';
-import { ReplyComponent } from './message/reply/reply.component';
-import { ReplyListComponent } from './message/reply/reply-list/reply-list.component';
 import { MessageListComponent } from './message/message-list/message-list.component';
 import { AddImagesComponent } from './profile-edit/media-folder/add-images/add-images.component';
+import { RecordVideoComponent } from './profile-edit/media-folder/record-video/record-video.component';
+import { YourgalleryComponent } from './profile-edit/yourgallery/yourgallery.component';
+import { CheckFileExtensionDirective } from './check-file-extension.directive';
+import { VideoChatComponent } from './video-chat/video-chat.component';
 
 
 @NgModule({
@@ -64,7 +65,6 @@ import { AddImagesComponent } from './profile-edit/media-folder/add-images/add-i
     GoogleLoginComponent,
     SigninComponent,
     SignupComponent,
-    HomeComponent,
     GodaddyComponent,
     ProfileItemComponent,
     ProfileEditComponent,
@@ -72,16 +72,16 @@ import { AddImagesComponent } from './profile-edit/media-folder/add-images/add-i
     MessageboardComponent,
     CommentsComponent,
     CommentsListComponent,
-    PaginatorProfilesComponent, 
-    PaginatorProfilesComponent,
     MyProfileComponent,
     MessageComponent,
     PostCreateComponent,
     SettingsComponent,
-    ReplyComponent,
-    ReplyListComponent,
     MessageListComponent,
-    AddImagesComponent
+    AddImagesComponent,
+    RecordVideoComponent,
+    YourgalleryComponent,
+    CheckFileExtensionDirective,
+    VideoChatComponent
   ],
   imports: [
     AppRoutingModule,
@@ -127,8 +127,8 @@ import { AddImagesComponent } from './profile-edit/media-folder/add-images/add-i
         ]
       } as SocialAuthServiceConfig,
     },
-    {provide: MatPaginatorIntl, useClass: PaginatorProfilesComponent},
-    ProfileService
+    ProfileService,
+    RecordVideoService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent]

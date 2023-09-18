@@ -6,14 +6,21 @@ const router = express.Router();
 
 router.post(
   "",
-  checkAuth,
+  // checkAuth,
+  videoFileExtract,
+  videoControllers.videoSave
+  
+);
+router.put(
+  "",
+  // checkAuth,
   videoFileExtract,
   videoControllers.videoCreate
   
 );
 
 
-router.get("", videoControllers.videoGet);
+// router.get("", videoControllers.videoGet);
 
 
 router.delete("/:id", checkAuth, videoControllers.videoDelete);

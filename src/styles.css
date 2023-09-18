@@ -84,9 +84,6 @@ button.mat-menu-item {
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
 }
-.mat-card {
-  padding: 0em !important;
-}
 .mat-input-element {
   text-align: center !important;
 }

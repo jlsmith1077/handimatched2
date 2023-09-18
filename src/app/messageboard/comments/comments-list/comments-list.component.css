@@ -6,15 +6,25 @@ mat-card {
     border: .2em;
     border-color: rgb(159, 241, 159);
     margin-bottom: 1em;
+    padding: 1em;
 }
 mat-card-subtitle {
     font-style: italic;
     color: blue;
+    padding: 1em;
+}
+mat-card-title {
+    color: blue;
+    padding-top: .5em;
+}
+p {
+    padding: 1em;
 }
 @media screen and (orientation: portrait) {
     mat-card-title {
        margin-bottom: 1em;
-
+       padding: 1em;
+       color: blue;
     }
     
   }
@@ -26,5 +36,6 @@ mat-card-subtitle {
 @media screen and (orientation: portrait) {
     p {
         line-height: 1em;
+        padding: 1em;
       }
   }

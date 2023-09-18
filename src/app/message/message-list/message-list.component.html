@@ -1,1 +1,45 @@
-<p>message-list works!</p>
+<mat-card>
+    <div class="conversations">
+        <div style="display: flex; flex: 0 0 auto; flex-direction: column; gap: 1em;height: 60vh; width: fit-content; padding: 1em;overflow-y: auto; overflow-x: hidden; padding: 1em;">            
+            <mat-label>Conversations</mat-label>
+            <div *ngFor="let convo of conversations" style=" display: flex; flex-direction: column; gap: 1em;">
+                <button (click)="choseConvo(convo)" mat-stroked-button>{{convo}}</button>
+            </div>
+        </div>
+        <mat-divider [inset]="true" [vertical]="true"></mat-divider>
+        <div style="display: flex; flex: 2; flex-direction: column; align-items: center; overflow-y: auto; overflow-x: hidden; padding: 1em; height: 60vh; width: 100%;">
+            <mat-label>Conversation with {{receivername}}</mat-label>
+            <div *ngFor="let mail of mails" class="messageContainer" [ngStyle]="{'background-color':mail.username === username ? 'white': 'alice-blue'}">
+                <div style=" padding: 1em; display: flex; color: blue;" [ngStyle]="{'flex-flow':mail.username === username ? 'row': 'row-reverse'} ">
+                    <i>
+                        {{mail.username}} :&nbsp; &nbsp;  {{mail.messageTime}}
+                    </i>
+                    <img mat-card-avatar [src]="mail.userpic">
+                </div>
+                <mat-card-content class="mail">
+                    <p>
+                        {{mail.content1}}
+                    </p>
+                    <ng-container *ngIf="mail.messageImages.length > 0">
+                            <img *ngFor="let image of mail.messageImages" style="height:200px; width: 200px; gap: .5em;" [src]="image"> 
+                    </ng-container>
+                    <ng-container *ngIf="enlargeImage"></ng-container>
+                    <ng-container *ngIf="enlargeVideo"></ng-container>
+                    <!-- <ng-container  *ngIf="mail.messageVideo">
+                        <video
+                            style="height:200px; width: 200px;"
+                            class="mat-eleveation-z8"
+                            controls
+                            playsInline     
+                            >
+                            <source [src]="mail.messageVideo">
+                        </video>
+                    </ng-container> -->
+                </mat-card-content>
+            </div>
+        </div> 
+    </div>
+    <mat-card-footer>
+        <app-message class="create" [receivername]="receivername"></app-message>
+    </mat-card-footer>
+</mat-card>

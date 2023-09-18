@@ -1,0 +1,56 @@
+<mat-card style="height: 100vh; text-align: center;">
+    <mat-card-content class="video"> 
+        <div class="local">
+            <mat-label>Local</mat-label>
+            <video #local_video [autoplay]="true" [muted]="true" [src]=""></video>
+        </div>
+        <div class="other-users" *ngFor="let videos of videoElConnectedUsers; let i = index;">
+            <mat-label>videos.username</mat-label>
+            <video #videoElements [autoplay]="true" [muted]="true" src="videos.source"></video>
+        </div>
+        <!-- <div style="background-color: white;display: flex; flex-direction: column; align-items: center;">
+            <mat-label>Remote</mat-label>
+            <video #received_video [autoplay]="true" src=""></video>
+        </div> -->
+    </mat-card-content>
+    
+    <div>
+        <p *ngFor="let message of messages; let i = index;">{{message}}</p>
+    </div>
+    <!-- <div>
+        <p *ngFor="let video of videos"></p>
+    </div> -->
+    <form [formGroup]="chatForm" style="height: fit-content; gap: 1em; padding: 1em; margin-top: 10em; display: flex; flex-flow: column; align-items: center;">
+        <mat-form-field style="text-align: center; width: 50%;">
+            <textarea matInput formControlName="message" placeholder="Message Here For Video Chat"></textarea>
+        </mat-form-field>    
+        <button (click)="sendMessage()" mat-raised-button style="color: green; width: fit-content;">Send Message</button>
+        <button (click)="openRoom()" mat-raised-button style="color: green; width: fit-content;">Open Room</button>
+        <button (click)="startLocalVideo()" mat-raised-button style="color: green; width: fit-content;">Turn on Camera</button>
+        <button (click)="call()" mat-raised-button style="color: green; width: fit-content;">Connect to other users</button>
+        <button (click)="pauseStream()" mat-raised-button style="color: green; width: fit-content;">Pause Stream</button>
+        <!-- <button (click)="createRoom()" mat-raised-button style="color: green; width: fit-content;">create room</button> -->
+    </form>
+</mat-card>
+
+
+
+<!-- <mat-card>
+    <mat-card-title>Video Chat</mat-card-title>
+    <mat-card-content class="video"> 
+        <div class="local">
+            <mat-label>Local</mat-label>
+            <video #local_video [autoplay]="true" [muted]="true" src=""></video>
+        </div>
+        <div style="background-color: white;display: flex; flex-direction: column; align-items: center;">
+            <mat-label>Remote</mat-label>
+            <video #received_video [autoplay]="true" src=""></video>
+        </div>
+    </mat-card-content>
+    <mat-card-actions style="display: flex; flex-flow: row-wrap; justify-content: center; margin: 1em; width: 100%; gap: 1em;">
+        <button mat-raised-button (click)="startLocalVideo()"> Start Local </button>
+        <button mat-raised-button (click)="pauseLocalVideo()"> Stop Local </button>
+        <button mat-raised-button (click)="call()"> Call </button>
+        <button mat-raised-button (click)="hangup()"> Hangup </button>
+    </mat-card-actions>
+</mat-card> -->

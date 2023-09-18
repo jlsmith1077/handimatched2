@@ -1,0 +1,33 @@
+
+
+<Attribute Name="uid" NameFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" FriendlyName="groups">
+  <AttributeValue>123456789</AttributeValue>
+</Attribute>
+
+<Attribute Name="email" NameFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" FriendlyName="groups">
+  <AttributeValue>jermain@groupsite.com</AttributeValue>
+</Attribute>
+
+<Attribute Name="first_name" NameFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" FriendlyName="groups">
+  <AttributeValue>Jermain</AttributeValue>
+</Attribute>
+
+<Attribute Name="last_name" NameFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" FriendlyName="groups">
+  <AttributeValue>Smith</AttributeValue>
+</Attribute>
+
+<Attribute Name="groups" NameFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" FriendlyName="groups">
+  <AttributeValue>https://jermaintest.groupsite.blue</AttributeValue>
+  <AttributeValue>https://testchangesubscription.groupsite.blue</AttributeValue>
+</Attribute>
+<Attribute Name="key" NameFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:transient" FriendlyName="groups">
+  <AttributeValue>
+    -----BEGIN PUBLIC KEY-----
+    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBMpIMNhq44cY4RU2bYA4NMD40
+    rZ3HixmJ+MLpf2iqH2+xjDe1u7dAR3Ln34Wl3jtLBXJfX21t7CVRrMnnUwmW0QTU
+    CntLjeZ2nO2BMa1j0bX8rwF/Y5olHCmUz6lMFPWCman0q8nRoHjY/RbEH2p2RKmH
+    eDCEnKhvGKJjz5ckBwIDAQAB
+    -----END PUBLIC KEY-----
+</AttributeValue>
+</Attribute>
+

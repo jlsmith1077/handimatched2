@@ -1,12 +1,13 @@
 export interface Mail {
-    id: string | null;
+    _id: string | null;
     content1: string;
     creator: string;
-    receiver: string;
+    receiverCreator: string;
     username: string;
     receivername: string;
     messageTime: object;
     userpic: string;
-    opened: string;
-    repliesAmt: number | null; 
+    messageImages: any;
+    messageVideo: any;
+    opened?: string;
 }

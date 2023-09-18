@@ -1,0 +1,61 @@
+mat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: black;
+    padding: 1em;
+}
+mat-card-content {
+text-align: center;
+}
+mat-card-header {
+    width: 100%;
+    padding: .5em;
+    border-radius: .5em;
+}
+mat-card-footer {
+    width: 75%;
+    text-align: center;
+}
+mat-label {
+    color: blue;
+    width: fit-content;
+}
+button {
+    border: solid .1em white;
+}
+img {
+    margin-right: .5em;
+}
+img :last-child {
+    margin-right: 0em;
+}
+.messageContainer {
+    margin: 1em;
+    margin-bottom: 0em;
+    border-radius: 1em;
+    background-color: white;
+    color: black;
+    width: 100%;
+}
+.create {
+    bottom: 1em;
+    text-align: center;
+    margin-bottom: 1em;
+    width: 100%;
+}
+.conversations {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1em;
+    width: fit-content;
+    background-color: black;
+}
+.mail {
+    border-radius: .5em;
+    padding: 1em;
+    font-size: x-large;
+    font-weight: 550;
+}

@@ -12,16 +12,23 @@ const profileSchema = mongoose.Schema({
     creator: { type: String, ref:'User', required: true },
     friends: { type: Array },
     friendsAmt: { type: Number, default: 0},
+    online: { type: String, required: true},
     imageGallery: {type: [{
         title: {type: String},
         path: {type: String, required: true},
-        likes: {type: Number}
+        likes: [],
+        likesAmt: {type: Number},
+        dislikes: [],
+        dislikesAmt: {type: Number}
     }]},
     videoGallery: {type: [{
         title: {type: String},
         path: {type: String, required: true},
-        likes: {type: Number}
-    }]}
+        likes: [],
+        likesAmt: {type: Number},
+        dislikes: [],
+        dislikesAmt: {type: Number} 
+        }]}
 });
 
 profileSchema.plugin(uniqueValidator);

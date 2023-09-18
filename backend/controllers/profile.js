@@ -17,9 +17,10 @@ exports.profileCreate = (req, res, next) => {
       imagePath: imagePath,
       creator: req.userData.userId,
       friends: [],
+      online: 'true',
       friendsAmt: req.body.friendsAmt,
-      imageGallery: req.body.imageGallery,
-      videoGallery: req.body.videoGallery
+      imageGallery: [],
+      videoGallery: []
      });
     profile.save()
     .then(createdProfile => {
@@ -38,6 +39,28 @@ exports.profileCreate = (req, res, next) => {
         });
     });
   };
+
+  exports.logOut = (req, res, next) => {
+    console.log('req', req.body, req)
+    // const username = req.body.username;
+    // Post.updateOne({_id: req.body.id},
+    //     {$addToSet: { likes: username },
+    //     $inc : {likesAmt: 1}}
+    //     ) 
+    //     .then(result => {
+    //         if (result.modifiedCount > 0) {
+    //         res.status(200).json({ message: 'Update successful!'
+    //                                 });  
+    //         } else {
+    //             res.status(401).json({message: 'Not authorized'});
+    //             }
+    //     })
+    //   .catch(error => {
+    //     res.status(500).json({
+    //       message: 'Was not able to update profile '
+    //     })
+    //   });
+}
 
   exports.socialLogin = () => {
     const url = req.protocol + "://" + req.get("host");
@@ -89,7 +112,8 @@ exports.profileCreate = (req, res, next) => {
       friends: req.body.friends,
       friendsAmt: req.body.friendsAmt,
       imageGallery: req.body.imageGallery,
-      videoGallery: req.body.videoGallery
+      videoGallery: req.body.videoGallery,
+      online: true
     });
     Profile.updateOne({ _id: req.params.id, creator: req.userData.userId}, profile)
     .then(result => {
@@ -146,6 +170,42 @@ exports.profileCreate = (req, res, next) => {
         profile: fetchedProfile
       });
    }
+   
+exports.profileAddMedia = (req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
+  const id = req.body.id;
+  const zero = 0;
+  const creator = req.body.creator
+  let path = url + "/images/" + req.file.filename;  
+  let fetchUser = Profile.updateOne({_id: id}, {$addToSet: 
+    {
+      imageGallery: {
+        title: req.body.title,
+        path: path,
+        likes: zero 
+      }
+    }
+  })
+  const profile = Profile.findOne({_id: req.bod.id})
+  fetchUser.then(result => {
+    console.log('result', result);
+    if(result.matchedCount > 0) {
+      res.status(200).json({
+        message: 'update successful',
+        profile: profile,
+      })
+    } else {
+      return res.status(401).json({
+        message: 'update unsuccessful'
+      });
+    }
+  })
+  .catch(err => {
+    return res.status(401).json({
+      message: 'update unsuccessful'
+    });
+  });
+}
 
    exports.profileDelete = (req, res, next) => {
     Profile.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(result => {

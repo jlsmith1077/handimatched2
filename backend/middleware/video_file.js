@@ -5,6 +5,7 @@ const MIME_TYPE_MAP = {
     "video/mp4": "mp4",
     "video/x-ms-wmv": "wmv",
     "video/webm": "webm",
+    "video/webm;codecs=vp9,opus": "webm",
     "application/ogg":"ogg",
     "application/x-mpegURL": "m3u8",
     "video/MP2T": "ts",
@@ -15,6 +16,7 @@ const MIME_TYPE_MAP = {
     "video/3gpp2": "3gpp2",
     "video/x-flv": "flv",
     "video/x-msvideo": "avi"
+    
   };
   
   const storage = multer.diskStorage({

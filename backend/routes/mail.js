@@ -1,23 +1,28 @@
 const express = require("express");
 const mailControllers = require("../controllers/mail");
-
+const fileExtractImage = require("../middleware/file");
+const fileExtractVideo = require("../middleware/video_file");
+const fileExtractImages = require("../middleware/image_video_file")
 const checkAuth = require("../middleware/check-auth");
-const mail = require("../models/mail");
-
 
 const router = express.Router();
 
 router.post(
   "",
   checkAuth,
+  fileExtractImages,
   mailControllers.mailCreate
   );
+router.put("",
+  checkAuth,
+  fileExtractImages,
+  mailControllers.mailCreate
+);
 
-router.get("", mailControllers.mailGet);
+router.patch("",checkAuth, mailControllers.mailGet);
 
-router.put("/:id", checkAuth, mailControllers.mailUpdate);
 
-router.patch("/:id", checkAuth, mailControllers.replyUpdate);
+router.patch("/:id", checkAuth, mailControllers.mailUpdate);
 
 router.delete("/:id", checkAuth, mailControllers.mailDelete);
 

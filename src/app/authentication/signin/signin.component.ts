@@ -34,6 +34,7 @@ ngOnInit(): void {
         return;
       }
       this.isLoading = true;
+      console.log('authserv login info:', form.value.email, form.value.password)
       this.authService.login(form.value.email, form.value.password );
     }
     ngOnDestroy() {

@@ -4,6 +4,7 @@ button {
 
 .table {
   max-width: 100%;
+  margin-left: .5em;
 }
 
 tr.example-detail-row {
@@ -80,6 +81,13 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 /* My CSS */
 
+button {
+  margin: 1em;
+}
+mat-card-subtitle {
+  margin: 1em;
+  color: rgb(78, 78, 246);
+}
 .container {
   margin: 0em;
   padding: 0em !important;
@@ -101,6 +109,23 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-position img {
   width: 200px;
   height: auto;
+}
+.galleries {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+mat-label {
+  padding: .2em;
+  margin: 1em;
+}
+.message {
+  width: 75%;
+  text-align: center;
+  margin-bottom: 1em;
 }
 /* @media screen and (orientation: portrait) {
   .example-element-position {

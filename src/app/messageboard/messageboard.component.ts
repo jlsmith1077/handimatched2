@@ -157,7 +157,7 @@ export class MessageboardComponent implements OnInit, OnDestroy {
       posts.filter(post =>  {
             post.likes?.filter(likeUser => {
               if(likeUser == this.username) {
-                this.postLikes?.push(post.id);
+                this.postLikes?.push(post.id); 
               }
             } )
           })
@@ -180,6 +180,7 @@ export class MessageboardComponent implements OnInit, OnDestroy {
           this.postLikes = this.postLikes.filter(element => element != id)
         } else {
           this.dataSource.data.map(element => {
+            console.log('how many times do I loop through')
             this.dataSource.data.find((y: Post) => {
               if(y.id == this.postSelectedId) {
                 element.likes!.push(this.username!);
